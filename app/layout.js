@@ -27,14 +27,14 @@ const roboto = Roboto({
   display: "swap",
 });
 const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
   display: "swap",
 });
 
 export const metadata = {
-  title: "Local Leads 24/7",
+  title: "Local Leads 247",
   description: "localleads247",
 };
 

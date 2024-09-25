@@ -47,11 +47,11 @@ body {
 }
 
 h1 {
-  @apply text-4xl md:text-5xl lg:text-6xl lg:leading-snug mb-4 font-sans font-bold;
+  @apply text-4xl md:text-5xl lg:text-6xl lg:leading-snug mb-4 font-sans;
 }
 
 h2 {
-  @apply text-3xl md:text-4xl lg:text-5xl lg:leading-snug mb-4 font-sans font-bold tracking-tight;
+  @apply text-3xl md:text-4xl lg:text-5xl lg:leading-snug mb-4 font-sans tracking-tight;
 }
 
 h3,
@@ -289,13 +289,7 @@ h6 {
   }
 }
 .bttn {
-  padding-top: 10px;
-  padding-right: 30px;
-  padding-bottom: 10px;
-  padding-left: 30px;
-  border-radius: 35px !important;
-  border-width: 1px;
-  border-style: solid;
+  @apply font-sans text-sm font-semibold border border-solid rounded-3xl pt-3 pb-3 pl-6 pr-6;
 }
 .sticky_content_title {
   font-size: 45px;
@@ -319,4 +313,44 @@ h6 {
   font-size: 25px;
   line-height: 35px;
   font-weight: 500;
+}
+
+.scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.scroller-content {
+  display: inline-flex;
+  transition: transform 0.3s ease;
+}
+
+.scroller-item {
+  flex: 0 0 auto;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-1 * var(--scroll-width)));
+  }
+}
+
+.scroller-content {
+  animation: scroll 30s linear infinite;
+}
+
+.scroller:hover .scroller-content {
+  animation-play-state: paused;
 }

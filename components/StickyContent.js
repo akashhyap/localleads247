@@ -25,12 +25,16 @@ const StickyContent = ({ blok }) => {
           paddingBottom: blok?.padding_bottom,
         }}
       >
-        <div>
-          <div className="text-[#3bc3b8]">{blok?.badge}</div>
+        {/* Left Column: Sticky Section */}
+        <div
+          className="sticky top-0 self-start"
+          style={{ height: "fit-content" }}
+        >
+          <div className="text-[#3bc3b8] font-sans mb-5">{blok?.badge}</div>
           {React.createElement(
             HeadingTag,
             {
-              className: "lg:leading-snug mb-4 font-sans sticky_content_title",
+              className: "lg:leading-snug mb-4 font-semibold sticky_content_title",
               ...storyblokEditable(blok),
             },
             content
@@ -44,6 +48,8 @@ const StickyContent = ({ blok }) => {
             />
           </div>
         </div>
+
+        {/* Right Column: Scrollable Content */}
         <div className="sticky_content">
           {blok.content.map((nestedBlok) => (
             <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid} />

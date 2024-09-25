@@ -27,7 +27,7 @@ const BannerSimple = ({ blok }) => {
       {React.createElement(
         HeadingTag,
         {
-          className: "lg:leading-snug mb-4 font-sans font-bold",
+          className: "font-semibold leading-[78px] tracking-tight",
           ...storyblokEditable(blok),
         },
         content
@@ -36,7 +36,7 @@ const BannerSimple = ({ blok }) => {
       <div className={`flex gap-3 mt-4 mb-5 ${blok?.button_alignment}`}>
         <Link
           href={blok.button1_link}
-          className="bttn banner1_btn_solid hover:bg-[]"
+          className="bttn banner1_btn_solid"
           style={{
             backgroundColor: blok?.button1_bg,
             color: blok?.button1_text,
@@ -53,11 +53,19 @@ const BannerSimple = ({ blok }) => {
         </Link>
         <Link
           href={blok.button2_link}
-          className="bttn banner1_btn_transparent"
+          className="bttn banner1_btn_transparent inline-flex transition duration-300"
           style={{
             backgroundColor: blok?.button2_bg,
             color: blok?.button2_text,
             borderColor: blok?.button2_border_color,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = blok?.button2_hover_bg;
+            e.currentTarget.style.color = blok?.button2_text_hover;
+          }}
+          onMouseLeave={(e) =>{
+            e.currentTarget.style.backgroundColor = blok?.button2_bg
+            e.currentTarget.style.color = blok?.button2_text
           }}
         >
           {blok.button2_label}

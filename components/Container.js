@@ -1,5 +1,14 @@
 import { storyblokEditable, StoryblokComponent } from "@storyblok/react";
 
+const items = [
+  "Roofing Contractors",
+  "Electricians Companies",
+  "Pool Repair Services",
+  "Pest Control Services",
+  "Landscaping Services",
+  "Home Cleaning Services",
+];
+
 const Container = ({ blok }) => {
   // console.log("container", blok);
 

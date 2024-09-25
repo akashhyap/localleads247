@@ -1,5 +1,5 @@
 {
-  "name": "khani-uk",
+  "name": "localleads247",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,9 @@
     "@headlessui/react": "^1.7.17",
     "@next/bundle-analyzer": "^14.0.4",
     "@next/third-parties": "^14.0.4",
+    "@react-spring/web": "^9.7.4",
     "@storyblok/react": "^2.4.8",
+    "@use-gesture/react": "^10.3.1",
     "autoprefixer": "10.4.14",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",

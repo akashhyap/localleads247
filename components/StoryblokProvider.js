@@ -11,6 +11,8 @@ import Content from "./Content";
 import BannerSimple from "./BannerSimple";
 import StickyContent from "./StickyContent";
 import ListContent from "./ListContent";
+import HorizontalScroller from "./HorizontalScroller";
+import BrandList from "./BrandList";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -56,9 +58,11 @@ storyblokInit({
     container: Container,
     heading: Heading,
     content: Content,
-    "banner_simple": BannerSimple,
-    "sticky_content": StickyContent,
-    "list_content": ListContent,
+    banner_simple: BannerSimple,
+    sticky_content: StickyContent,
+    list_content: ListContent,
+    HorizontalScroller: HorizontalScroller,
+    brand_list: BrandList,
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,
