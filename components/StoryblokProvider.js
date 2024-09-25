@@ -3,6 +3,7 @@
 import { storyblokInit, apiPlugin } from "@storyblok/react/rsc";
 
 /** 2. Import your components */
+import Config from "./Config";
 import Page from "./Page";
 import Teaser from "./Teaser";
 import Container from "./Container";
@@ -13,6 +14,9 @@ import StickyContent from "./StickyContent";
 import ListContent from "./ListContent";
 import HorizontalScroller from "./HorizontalScroller";
 import BrandList from "./BrandList";
+import FooterLink from "./FooterLink";
+import MarketingFunnel from "./MarketingFunnel";
+import MenuLink from "./MenuLink";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -30,9 +34,6 @@ import BrandList from "./BrandList";
 // import ImageOverlayCard from "./ImageOverlayCard";
 // import CardItem from "./CardItem";
 // import RelatedArticles from "./RelatedArticles";
-// import Config from "./Config";
-// import MenuLink from "./MenuLink";
-// import FooterLink from "./FooterLink";
 // import SubmenuLink from "./SubmenuLink";
 // import ImageTextSplit from "./ImageTextSplit";
 // import ArticleContentArea from "./ArticleContentArea";
@@ -53,6 +54,7 @@ storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_API_TOKEN,
   use: [apiPlugin],
   components: {
+    config: Config,
     page: Page,
     teaser: Teaser,
     container: Container,
@@ -63,6 +65,9 @@ storyblokInit({
     list_content: ListContent,
     HorizontalScroller: HorizontalScroller,
     brand_list: BrandList,
+    footer_link: FooterLink,
+    marketing_funnel: MarketingFunnel,
+    menu_link: MenuLink,
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,
@@ -81,9 +86,7 @@ storyblokInit({
     // "card-item": CardItem,
     // "related-articles": RelatedArticles,
     // config: Config,
-    // menu_link: MenuLink,
     // submenu_link: SubmenuLink,
-    // footer_link: FooterLink,
     // "image-text-split": ImageTextSplit,
     // "article-content-area": ArticleContentArea,
     // images: Images,
@@ -98,7 +101,6 @@ storyblokInit({
     // faqContent: FaqContent,
     // htmlElements: HtmlElements,
     // searchBar: SearchBar,
-    // config: Config,
     // menu: Menu,
     // footer: Footer,
   },

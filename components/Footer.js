@@ -11,7 +11,7 @@ const Footer = ({ blok }) => {
       <div className="md:max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex flex-wrap justify-between items-center">
           <div className="relative">
-            <Image src={blok?.logo.filename} alt="" width={150} height={130} />
+            <Image src={blok?.logo.filename} alt="" width={250} height={150} />
           </div>
           <div className="flex flex-wrap basis-full md:basis-auto gap-3 lg:gap-5 mt-5 lg:mt-0">
             {blok?.footer.map((nestedBlok) => (

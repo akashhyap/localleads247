@@ -7,9 +7,9 @@ import { getStory } from "../utils/storyblok";
 import Config from "@/components/Config";
 import { GoogleTagManager } from "@next/third-parties/google";
 
-// const DynamicFooter = dynamic(() => import("@/components/Footer"), {
-//   ssr: false,
-// });
+const DynamicFooter = dynamic(() => import("@/components/Footer"), {
+  ssr: false,
+});
 
 storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_API_TOKEN,
@@ -46,14 +46,14 @@ async function fetchData() {
 }
 
 export default async function RootLayout({ children }) {
-  // const { story } = await fetchData();
+  const { story } = await fetchData();
   return (
     <StoryblokProvider>
       <html lang="en" className={`${poppins.variable} ${roboto.variable}`}>
         <body>
-          {/* <Config blok={story?.content} /> */}
+          <Config blok={story?.content} />
           {children}
-          {/* <DynamicFooter blok={story?.content} /> */}
+          <DynamicFooter blok={story?.content} />
         </body>
         {/* <GoogleTagManager gtmId="G-ML4X1FMSZE" dataLayerName="dataLayer" /> */}
       </html>

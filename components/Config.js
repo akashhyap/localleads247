@@ -52,8 +52,8 @@ const Config = ({ blok }) => {
                   <Image
                     src={blok?.logo?.filename}
                     alt="logo"
-                    width={100}
-                    height={60}
+                    width={250}
+                    height={150}
                     className="object-contain object-center"
                     priority
                   />
