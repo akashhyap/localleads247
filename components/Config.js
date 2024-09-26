@@ -40,69 +40,76 @@ const Config = ({ blok }) => {
   return (
     <>
       <div
-        className={`header_outer ${headerStyle} header-transition py-3 px-4 sm:px-6 lg:px-8 rounded-lg z-50`}
+        className={`header_outer ${headerStyle} header-transition py-3 px-4 sm:px-6 xl:px-8 rounded-lg z-50`}
       >
-        <div className="">
-          <div className="flex items-center">
-            {/* Site Logo */}
-            <div className="flex justify-start">
-              <Link href="/" className="relative">
-                <span className="sr-only">Khani</span>
-                {blok?.logo && (
-                  <Image
-                    src={blok?.logo?.filename}
-                    alt="logo"
-                    width={250}
-                    height={150}
-                    className="object-contain object-center"
-                    priority
-                  />
-                )}
-              </Link>
-            </div>
-            {/* Mobile buttons */}
-            <div className="flex -mr-2 -my-2 order-3">
-              <button
-                type="button"
-                className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-black hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
-                onClick={() => setMenuOpen(!menuOpen)}
+        <div className="flex items-center justify-between">
+          {/* Site Logo */}
+          <div className="flex justify-start">
+            <Link href="/" className="relative">
+              <span className="sr-only">Khani</span>
+              {blok?.logo && (
+                <Image
+                  src={blok?.logo?.filename}
+                  alt="logo"
+                  width={250}
+                  height={150}
+                  className="object-contain object-center"
+                  priority
+                />
+              )}
+            </Link>
+          </div>
+          {/* Mobile buttons */}
+          <div className="flex -mr-2 -my-2 order-3">
+            <button
+              type="button"
+              className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-black hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <span className="sr-only">Open menu</span>
+              {/* Icon for menu (three horizontal lines) */}
+              <svg
+                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
               >
-                <span className="sr-only">Open menu</span>
-                {/* Icon for menu (three horizontal lines) */}
-                <svg
-                  className="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16m-7 6h7"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-            {/* Menu items */}
-            <nav className="font-sans font-medium text-lg hidden md:flex md:flex-1 md:items-center ml-0 md:ml-10">
-              {blok?.header_menu?.map((nestedBlok) => (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          {/* Menu items */}
+          <nav className="font-sans font-medium text-lg hidden md:flex md:flex-1 md:justify-between md:items-center ml-0 md:ml-10">
+            {blok?.header_menu?.map((nestedBlok) => (
+              <StoryblokComponent
+                blok={nestedBlok}
+                key={nestedBlok._uid}
+                closeMenu={() => setMenuOpen(false)}
+              />
+            ))}
+            <div className="right_menu flex gap-3">
+              {blok?.right_menu?.map((rightBlok) => (
                 <StoryblokComponent
-                  blok={nestedBlok}
-                  key={nestedBlok._uid}
+                  blok={rightBlok}
+                  key={rightBlok._uid}
                   closeMenu={() => setMenuOpen(false)}
                 />
               ))}
-            </nav>
-            {/*Search*/}
-            <div className="md:order-none order-2 ml-auto">
+            </div>
+          </nav>
+          {/*Search*/}
+          {/* <div className="md:order-none order-2 ml-auto">
               <Link href="/search" aria-label="Search">
                 <FaSearch />
               </Link>
-            </div>
-          </div>
+            </div> */}
         </div>
       </div>
 
@@ -187,6 +194,17 @@ const Config = ({ blok }) => {
                   />
                 );
               })}
+              <div className="right_menu">
+                {blok?.right_menu?.map((nestedBlok) => {
+                  return (
+                    <CustomStoryblokComponent
+                      blok={nestedBlok}
+                      key={nestedBlok._uid}
+                      closeMenu={() => setMenuOpen(false)}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

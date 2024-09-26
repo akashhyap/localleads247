@@ -54,13 +54,22 @@ h6 {
 }
 
 .header_outer {
-  width: calc(100% - var(--container-padding) * 2);
-  max-width: calc(var(--container-width) - var(--container-padding) * 2);
   left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
   background-color: #fff;
+}
+@media (min-width: 768px) {
+  .header_outer {
+    width: calc(100% - var(--container-padding) * 1);
+    max-width: calc(var(--container-width) - var(--container-padding) * 2);
+  }
+}
+@media (min-width: 1280px) {
+  .header_outer {
+    width: calc(100% - var(--container-padding) * 2);
+  }
 }
 
 .fluid_container {
@@ -342,7 +351,7 @@ h6 {
   border-radius: 50%;
 }
 
-.sticky_section h3{
+.sticky_section h3 {
   font-weight: 500;
   line-height: 1.25;
 }

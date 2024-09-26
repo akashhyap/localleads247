@@ -6,6 +6,8 @@ import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
 
 const MenuLink = ({ blok, closeMenu }) => {
+  console.log("menu link", blok);
+  
   const hasSubMenu = blok?.menu?.length != 0;
 
   return (
@@ -99,15 +101,27 @@ const MenuLink = ({ blok, closeMenu }) => {
         </>
       ) : (
         <div className="relative text-left z-10 mb-2 md:mb-0">
-          {blok.link.cached_url !== "search" ? (
-            <Link
-              href={`/${blok.link.cached_url}`}
-              className="menulinks text-black hover:text-gray-900"
-              onClick={closeMenu}
-              aria-label="menu link"
-            >
-              {blok.name}
-            </Link>
+          {blok?.link.cached_url !== "search" ? (
+            blok?.isButton ? (
+              <Link
+                href={`/${blok.link.cached_url}`}
+                className="py-3 px-4 rounded-full text-base"
+                onClick={closeMenu}
+                aria-label="menu link"
+                style={{ backgroundColor: blok?.bg_color.color, color:blok?.text_color.color }}
+              >
+                {blok.name}
+              </Link>
+            ) : (
+              <Link
+                href={`/${blok.link.cached_url}`}
+                className="0001 menulinks text-black hover:text-gray-900"
+                onClick={closeMenu}
+                aria-label="menu link"
+              >
+                {blok.name}
+              </Link>
+            )
           ) : undefined}
         </div>
       )}
