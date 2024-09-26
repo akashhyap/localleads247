@@ -337,7 +337,7 @@ h6 {
   }
 }
 .bttn {
-  @apply font-sans text-sm font-semibold border border-solid rounded-3xl pt-3 pb-3 pl-6 pr-6;
+  @apply font-sans text-base font-semibold border border-solid rounded-3xl pt-3 pb-3 pl-6 pr-6;
 }
 
 .big_bullets {
@@ -482,7 +482,7 @@ h6 {
 
 .next-step,
 .prev-step {
-  @apply flex-1 bg-[#38b6ff] text-white border-none p-2 rounded-lg text-center cursor-pointer;
+  @apply flex-1 bg-[#38b6ff] text-white border-none p-2 rounded-full text-center cursor-pointer;
 }
 
 .next-step::after {

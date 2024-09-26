@@ -105,10 +105,10 @@ const MenuLink = ({ blok, closeMenu }) => {
             blok?.isButton ? (
               <Link
                 href={`/${blok.link.cached_url}`}
-                className="py-3 px-4 rounded-full text-base"
+                className={`py-3 px-4 rounded-full text-base bg-[${blok?.bg_color.color}] hover:bg-opacity-90 transition-colors text-white`}
                 onClick={closeMenu}
                 aria-label="menu link"
-                style={{ backgroundColor: blok?.bg_color.color, color:blok?.text_color.color }}
+               
               >
                 {blok.name}
               </Link>
