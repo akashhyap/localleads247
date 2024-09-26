@@ -932,3 +932,8 @@ i.icon-none {
 .primary_btn {
   @apply bg-[#38b6ff] hover:bg-[#1a94d6] text-white p-2 px-6 py-3 rounded-full transition duration-300 text-[18px];
 }
+@media (max-width: 1499px) {
+  .primary_btn {
+    @apply text-base;
+  }
+}
