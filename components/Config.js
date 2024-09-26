@@ -40,7 +40,7 @@ const Config = ({ blok }) => {
   return (
     <>
       <div
-        className={`${headerStyle} header-transition w-full bg-white md:max-w-6xl mx-auto py-3 px-4 sm:px-6 lg:px-8 rounded-lg z-50`}
+        className={`header_outer ${headerStyle} header-transition py-3 px-4 sm:px-6 lg:px-8 rounded-lg z-50`}
       >
         <div className="">
           <div className="flex items-center">
@@ -87,7 +87,7 @@ const Config = ({ blok }) => {
               </button>
             </div>
             {/* Menu items */}
-            <nav className="font-sans font-medium text-sm hidden md:flex md:flex-1 md:items-center ml-0 md:ml-10">
+            <nav className="font-sans font-medium text-lg hidden md:flex md:flex-1 md:items-center ml-0 md:ml-10">
               {blok?.header_menu?.map((nestedBlok) => (
                 <StoryblokComponent
                   blok={nestedBlok}

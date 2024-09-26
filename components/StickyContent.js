@@ -15,11 +15,9 @@ const StickyContent = ({ blok }) => {
     }
   }, [blok.title_label]);
   return (
-    <div {...storyblokEditable(blok)} className="bg-[#e4fcff]">
+    <div {...storyblokEditable(blok)} className="bg-[#ececec]">
       <div
-        className={`px-4 grid grid-cols-2 gap-10 ${blok?.max_width} ${
-          blok?.max_width ? "mx-auto" : ""
-        }`}
+        className="px-4 grid grid-cols-2 gap-10 fluid_container sticky_section"
         style={{
           paddingTop: blok?.padding_top,
           paddingBottom: blok?.padding_bottom,
@@ -30,7 +28,7 @@ const StickyContent = ({ blok }) => {
           className="sticky top-0 self-start"
           style={{ height: "fit-content" }}
         >
-          <div className="text-[#3bc3b8] font-sans mb-5">{blok?.badge}</div>
+          <div className="uppercase mb-5">{blok?.badge}</div>
           {React.createElement(
             HeadingTag,
             {

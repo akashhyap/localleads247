@@ -5,14 +5,6 @@ import { storyblokEditable } from "@storyblok/react";
 import Link from "next/link";
 
 const BannerSimple = ({ blok }) => {
-  const HeadingTag = blok?.title_tag || "p";
-  const [content, setContent] = useState(null);
-
-  useEffect(() => {
-    if (blok.title_label) {
-      setContent(render(blok.title_label));
-    }
-  }, [blok.title_label]);
   return (
     <main
       className={`px-4 ${blok?.content_alignment} ${blok?.max_width} ${
@@ -24,15 +16,20 @@ const BannerSimple = ({ blok }) => {
       }}
       {...storyblokEditable(blok)}
     >
-      {React.createElement(
+      {/* {React.createElement(
         HeadingTag,
         {
           className: "font-semibold leading-[78px] tracking-tight",
           ...storyblokEditable(blok),
+          style: {
+            color: blok?.title_color?.color,
+          },
         },
         content
-      )}
-      {render(blok.content)}
+      )} */}
+      <div className="pb-7" style={{ color: blok?.text_color?.color }}>
+        {render(blok.content)}
+      </div>
       <div className={`flex gap-3 mt-4 mb-5 ${blok?.button_alignment}`}>
         <Link
           href={blok.button1_link}
@@ -63,9 +60,9 @@ const BannerSimple = ({ blok }) => {
             e.currentTarget.style.backgroundColor = blok?.button2_hover_bg;
             e.currentTarget.style.color = blok?.button2_text_hover;
           }}
-          onMouseLeave={(e) =>{
-            e.currentTarget.style.backgroundColor = blok?.button2_bg
-            e.currentTarget.style.color = blok?.button2_text
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = blok?.button2_bg;
+            e.currentTarget.style.color = blok?.button2_text;
           }}
         >
           {blok.button2_label}
@@ -80,6 +77,7 @@ const BannerSimple = ({ blok }) => {
       <div
         style={{
           paddingTop: blok?.content2_pt,
+          color: blok?.text_color?.color,
         }}
       >
         {render(blok?.content2)}

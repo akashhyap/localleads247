@@ -17,6 +17,7 @@ import BrandList from "./BrandList";
 import FooterLink from "./FooterLink";
 import MarketingFunnel from "./MarketingFunnel";
 import MenuLink from "./MenuLink";
+import HomeServiceLead from "./HomeServiceLead";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -68,6 +69,7 @@ storyblokInit({
     footer_link: FooterLink,
     marketing_funnel: MarketingFunnel,
     menu_link: MenuLink,
+    home_service_lead: HomeServiceLead
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,

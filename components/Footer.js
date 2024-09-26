@@ -8,7 +8,7 @@ const Footer = ({ blok }) => {
   // console.log("footer", blok);
   return (
     <div className="footer bg-[#fcf2eb] pt-9">
-      <div className="md:max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="fluid_container">
         <div className="flex flex-wrap justify-between items-center">
           <div className="relative">
             <Image src={blok?.logo.filename} alt="" width={250} height={150} />
