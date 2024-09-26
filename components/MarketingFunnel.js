@@ -132,11 +132,11 @@ const MarketingFunnel = () => {
           <div className="step">
             <p className="light_text">
               Awesome, thanks{" "}
-              <span className="userNameDisplay">{userName}</span>! 👍 Now, let&apos;s
-              see if we&apos;re the perfect match to skyrocket your business. 🚀💼
-              We&apos;ve got a quick quiz to make sure we can serve up that secret
-              sauce for your success. Ready to dive in? It&apos;ll be painless, we
-              promise! 😉
+              <span className="userNameDisplay">{userName}</span>! 👍 Now,
+              let&apos;s see if we&apos;re the perfect match to skyrocket your
+              business. 🚀💼 We&apos;ve got a quick quiz to make sure we can
+              serve up that secret sauce for your success. Ready to dive in?
+              It&apos;ll be painless, we promise! 😉
             </p>
             <h3>What type of home-based service do you offer?</h3>
 
@@ -183,8 +183,8 @@ const MarketingFunnel = () => {
         {currentStep === 4 && (
           <div className="step">
             <h3>
-              Let&apos;s talk marketing magic! 🎩✨ What strategies are you currently
-              using to attract local customers?
+              Let&apos;s talk marketing magic! 🎩✨ What strategies are you
+              currently using to attract local customers?
             </h3>
             <p className="light_text">Check all that apply</p>
             <div className="m_types_container icons">
@@ -339,8 +339,8 @@ const MarketingFunnel = () => {
         {currentStep === 5 && (
           <div className="step">
             <h3>
-              Let&apos;s pin your business on the map! 🗺️ Where do you work your home
-              service magic?
+              Let&apos;s pin your business on the map! 🗺️ Where do you work your
+              home service magic?
             </h3>
 
             <select
@@ -399,8 +399,8 @@ const MarketingFunnel = () => {
         {currentStep === 6 && (
           <div className="step">
             <h3>
-              Let&apos;s talk treasure chests! 💰 What&apos;s your monthly budget for
-              attracting those valuable local customers?
+              Let&apos;s talk treasure chests! 💰 What&apos;s your monthly
+              budget for attracting those valuable local customers?
             </h3>
             <p className="light_text">
               Choose the range that best fits your marketing piggy bank
@@ -509,34 +509,37 @@ const MarketingFunnel = () => {
 
         {currentStep === 7 && (
           <div className="step">
-            <h3>
-              <span className="userNameDisplay">{userName}</span>, what is your
-              website URL?
-            </h3>
+            <h3>{userName}, what is your website URL?</h3>
             <p className="light_text">
               If you don&apos;t have one, check the box below
             </p>
 
-            <div id="websiteInputContainer">
-              <input
-                type="url"
-                id="websiteUrl"
-                name="websiteUrl"
-                placeholder="https://example.com"
-                value={formData.websiteUrl || ""}
-                onChange={handleInputChange}
-                disabled={formData.noWebsite}
-                required={!formData.noWebsite} // Required only if the user does not check "no website"
-              />
-            </div>
+            {/* Conditionally render the input field if the checkbox is not checked */}
+            {!formData.noWebsite && (
+              <div className="revenue-input-container">
+                <input
+                  type="url"
+                  id="websiteUrl"
+                  name="website_url"
+                  placeholder="https://example.com"
+                  value={formData.website_url}
+                  onChange={(e) =>
+                    setFormData({ ...formData, website_url: e.target.value })
+                  }
+                  required
+                />
+              </div>
+            )}
 
             <div className="no-website-container">
               <input
                 type="checkbox"
                 id="noWebsite"
-                name="noWebsite"
-                checked={formData.noWebsite || false}
-                onChange={handleInputChange}
+                name="no_website"
+                checked={formData.noWebsite}
+                onChange={(e) =>
+                  setFormData({ ...formData, noWebsite: e.target.checked })
+                }
               />
               <label htmlFor="noWebsite">I don&apos;t have a website</label>
             </div>
@@ -564,19 +567,19 @@ const MarketingFunnel = () => {
           <div className="step">
             <h3>Paint Us a Picture of Your Home Service Empire! 🏠🎨</h3>
             <p className="light_text">
-              We&apos;re excited to learn about your unique business! Give us the
-              inside scoop:
+              We&apos;re excited to learn about your unique business! Give us
+              the inside scoop:
             </p>
             <div className="text-center">
               <ol className="light_text text-left inline-block">
-                <li>What magical home services do you offer? 🧙‍♂️</li>
-                <li>Who are your ideal customers? 🎯</li>
-                <li>What&apos;s your typical price range for services? 💲</li>
+                <li>🧙‍♂️What magical home services do you offer?</li>
+                <li>🎯Who are your ideal customers?</li>
+                <li>💲What&apos;s your typical price range for services?</li>
               </ol>
             </div>
             <p className="light_text">
-              Don&apos;t hold back - the more we know, the better we can help you
-              dominate your local market!
+              Don&apos;t hold back - the more we know, the better we can help
+              you dominate your local market!
             </p>
 
             <textarea
@@ -609,12 +612,13 @@ const MarketingFunnel = () => {
         {currentStep === 9 && (
           <div className="step">
             <h3>
-              Let&apos;s Celebrate Your Success! 🎉 What&apos;s Your Monthly Money Magic?
+              Let&apos;s Celebrate Your Success! 🎉 What&apos;s Your Monthly
+              Money Magic?
             </h3>
             <p className="light_text">
               Understanding your current revenue helps us tailor our strategies
-              to supercharge your growth. Don&apos;t worry - we&apos;re not here to judge,
-              only to help you reach new heights!
+              to supercharge your growth. Don&apos;t worry - we&apos;re not here
+              to judge, only to help you reach new heights!
             </p>
 
             <div className="revenue-input-container">
@@ -622,7 +626,10 @@ const MarketingFunnel = () => {
                 type="text"
                 id="currentRevenue"
                 name="current_revenue"
-                value={`$${(formData.current_revenue || 0).toLocaleString()}`} // Ensure it&apos;s a valid number
+                value={`$${(formData.current_revenue !== undefined
+                  ? formData.current_revenue
+                  : 33000
+                ).toLocaleString()}`} // Ensure it&apos;s a valid number
                 onChange={(e) => {
                   const value = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric values
                   setFormData({
@@ -642,10 +649,19 @@ const MarketingFunnel = () => {
                 min="0"
                 max="1000000"
                 step="1000"
-                value={formData.current_revenue || 0} // Ensure it&apos;s a valid number
+                value={
+                  formData.current_revenue !== undefined
+                    ? formData.current_revenue
+                    : 33000
+                }
                 onChange={(e) => {
                   const value = parseInt(e.target.value, 10);
                   setFormData({ ...formData, current_revenue: value });
+                }}
+                style={{
+                  background: `linear-gradient(to right, #38bdf8 ${
+                    (formData.current_revenue / 1000000) * 100
+                  }%, #d3d3d3 ${(formData.current_revenue / 1000000) * 100}%)`,
                 }}
               />
             </div>
@@ -673,9 +689,9 @@ const MarketingFunnel = () => {
           <div className="step">
             <h3>Dream Big! 🌠 What&apos;s Your Target Monthly Revenue?</h3>
             <p className="light_text">
-              Let&apos;s set your sights on the stars! We&apos;re asking this so we can
-              craft a stellar growth plan to rocket your business to your dream
-              destination. 🚀
+              Let&apos;s set your sights on the stars! We&apos;re asking this so
+              we can craft a stellar growth plan to rocket your business to your
+              dream destination. 🚀
             </p>
 
             <div className="revenue-input-container">
@@ -683,7 +699,10 @@ const MarketingFunnel = () => {
                 type="text"
                 id="targetRevenue"
                 name="target_revenue"
-                value={`$${(formData.target_revenue || 0).toLocaleString()}`} // Ensure it&apos;s a valid number
+                value={`$${(formData.target_revenue !== undefined
+                  ? formData.target_revenue
+                  : 100000
+                ).toLocaleString()}`} // Default to $100,000
                 onChange={(e) => {
                   const value = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric values
                   setFormData({
@@ -703,10 +722,19 @@ const MarketingFunnel = () => {
                 min="0"
                 max="2000000"
                 step="1000"
-                value={formData.target_revenue || 0} // Ensure it&apos;s a valid number
+                value={
+                  formData.target_revenue !== undefined
+                    ? formData.target_revenue
+                    : 100000
+                } // Default to $100,000
                 onChange={(e) => {
                   const value = parseInt(e.target.value, 10);
                   setFormData({ ...formData, target_revenue: value });
+                }}
+                style={{
+                  background: `linear-gradient(to right, #38bdf8 ${
+                    (formData.target_revenue / 2000000) * 100
+                  }%, #d3d3d3 ${(formData.target_revenue / 2000000) * 100}%)`,
                 }}
               />
             </div>
@@ -734,12 +762,13 @@ const MarketingFunnel = () => {
           <div className="step">
             <h3>
               Time for Some Real Talk,{" "}
-              <span className="userNameDisplay">{userName}</span>! 🤔 What&apos;s the
-              #1 Roadblock Standing Between You and Your Revenue Dreams?
+              <span className="userNameDisplay">{userName}</span>! 🤔
+              What&apos;s the #1 Roadblock Standing Between You and Your Revenue
+              Dreams?
             </h3>
             <p className="light_text">
-              We all face challenges. Let&apos;s identify yours so we can knock it
-              down together! 💪
+              We all face challenges. Let&apos;s identify yours so we can knock
+              it down together! 💪
             </p>
 
             <textarea
@@ -776,8 +805,8 @@ const MarketingFunnel = () => {
             </h3>
             <p className="light_text">
               <span className="userNameDisplay">{userName}</span>, your journey
-              to local market domination is about to begin. Let&apos;s pinpoint your
-              take-off time!
+              to local market domination is about to begin. Let&apos;s pinpoint
+              your take-off time!
             </p>
 
             <div className="options-container list">
@@ -851,8 +880,8 @@ const MarketingFunnel = () => {
           <div className="step">
             <h3>
               On a scale of 1 to 10... (1 being I am fine where I am, and 10
-              being I&apos;ll do anything to reach my revenue goals.) What number are
-              you?
+              being I&apos;ll do anything to reach my revenue goals.) What
+              number are you?
             </h3>
 
             <div className="options-container options-container_numbers">
@@ -956,9 +985,9 @@ const MarketingFunnel = () => {
               Success, <span className="userNameDisplay">{userName}</span>!
             </h3>
             <p className="light_text">
-              Based on your responses, we&apos;re confident we can SUPERCHARGE your
-              business growth with our proven funnels and marketing strategies.
-              🚀💼
+              Based on your responses, we&apos;re confident we can SUPERCHARGE
+              your business growth with our proven funnels and marketing
+              strategies. 🚀💼
             </p>
 
             <input

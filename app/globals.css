@@ -427,14 +427,7 @@ h6 {
 
 .next-step,
 .prev-step {
-  background-color: #38b6ff;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  flex: 1;
+  @apply flex-1 bg-[#38b6ff] text-white border-none p-2 rounded-lg text-center cursor-pointer;
 }
 
 .next-step::after {
@@ -446,11 +439,7 @@ h6 {
 }
 
 .cta-direction {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  gap: 10px;
+  @apply flex justify-between gap-3 mt-10 mb-8;
 }
 .light_text {
   line-height: 1.8;
@@ -473,12 +462,8 @@ select.light_text.text-left {
   display: inline-block;
 }
 
-.step h3 {
-  font-size: 38px;
-  font-weight: 700;
-  line-height: 36px;
-  color: #000000;
-  text-align: center;
+.funnel_container .step h3 {
+  @apply mb-8 mt-5 text-4xl font-bold text-center;
 }
 
 .step_heading_one {
@@ -492,14 +477,12 @@ select.light_text.text-left {
 }
 
 .funnel_container {
-  max-width: 757px !important;
-  margin: 0 auto;
-  padding: 60px 0;
+  @apply w-full max-w-2xl mx-auto py-16 px-3;
 }
 
 @media (max-width: 768px) {
   .funnel_container {
-    padding: 30px 0;
+    @apply py-8;
   }
 }
 
@@ -772,57 +755,6 @@ i.icon-none {
   margin: 0 auto 20px;
 }
 
-#currentRevenueSlider,
-#targetRevenueSlider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 10px;
-  border-radius: 5px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-#currentRevenueSlider:hover,
-#targetRevenueSlider:hover {
-  opacity: 1;
-}
-#currentRevenueSlider::-webkit-slider-thumb,
-#targetRevenueSlider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-}
-
-#currentRevenueSlider::-moz-range-thumb,
-#targetRevenueSlider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-}
-
-#currentRevenueSlider::-webkit-slider-thumb {
-  border: 2px solid #5ac8fa;
-}
-
-#targetRevenueSlider::-webkit-slider-thumb {
-  border: 2px solid #5ac8fa;
-}
-
-#currentRevenueSlider::-moz-range-thumb {
-  border: 2px solid #5ac8fa;
-}
-
-#targetRevenueSlider::-moz-range-thumb {
-  border: 2px solid #5ac8fa;
-}
 
 .options-container_numbers {
   display: flex;
@@ -843,7 +775,7 @@ i.icon-none {
 .options-container_numbers input[type="radio"] + label {
   background: #fff;
   box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.08);
-  border-radius: 35%;
+  border-radius: 20%;
   cursor: pointer;
   position: relative;
   transition: background-color 0.3s ease;
@@ -873,14 +805,64 @@ i.icon-none {
   }
 }
 
-.funnel_container .step h3 {
-  @apply mb-8 mt-5;
-}
-
-.funnel_container .step input {
-  @apply p-2 w-full border border-solid rounded-lg bg-[#efefef];
+.funnel_container .step input,
+.funnel_container .step textarea {
+  @apply p-2 w-full border border-solid rounded-lg bg-[#efefef] shadow-sm;
 }
 
 .funnel_container .step select {
   @apply p-2 w-full border border-solid rounded-lg bg-[#efefef];
+}
+
+.no-website-container {
+  @apply mt-8;
+}
+
+.funnel_container .step .no-website-container input {
+  @apply w-auto mr-2;
+}
+
+#currentRevenueSlider,
+#targetRevenueSlider {
+  @apply w-full h-2 p-1 rounded-3xl bg-[#d3d3d3] outline-none opacity-70 transition-opacity appearance-none;
+}
+
+#currentRevenueSlider:hover,
+#targetRevenueSlider:hover {
+  opacity: 1;
+}
+#currentRevenueSlider::-webkit-slider-thumb,
+#targetRevenueSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #5ac8fa;
+  cursor: pointer;
+}
+
+#currentRevenueSlider::-moz-range-thumb,
+#targetRevenueSlider::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+#currentRevenueSlider::-webkit-slider-thumb {
+  border: 1px solid #5ac8fa;
+}
+
+#targetRevenueSlider::-webkit-slider-thumb {
+  border: 1px solid #5ac8fa;
+}
+
+#currentRevenueSlider::-moz-range-thumb {
+  border: 1px solid #5ac8fa;
+}
+
+#targetRevenueSlider::-moz-range-thumb {
+  border: 1px solid #5ac8fa;
 }
