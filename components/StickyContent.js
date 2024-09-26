@@ -4,7 +4,8 @@ import { StoryblokComponent, storyblokEditable } from "@storyblok/react";
 import { render } from "storyblok-rich-text-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
-
+import Lottie from "lottie-react";
+import animationData from "../animation/lottie.json"
 const StickyContent = ({ blok }) => {
   const HeadingTag = blok?.title_tag || "p";
   const [content, setContent] = useState(null);
@@ -38,12 +39,13 @@ const StickyContent = ({ blok }) => {
             content
           )}
           <div className="relative w-full aspect-w-16 aspect-h-9">
-            <Image
+            {/* <Image
               src={blok?.image?.filename}
               alt=""
               fill
               className="w-full object-center object-contain"
-            />
+            /> */}
+             <Lottie animationData={animationData} />
           </div>
         </div>
 
