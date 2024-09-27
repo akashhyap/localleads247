@@ -7,8 +7,8 @@ const ReviewSection = ({ blok }) => {
   const breakpointColumnsObj = {
     default: 3,
     1100: 3,
-    700: 2,
-    500: 1,
+    1023: 2,
+    640: 1,
   };
   return (
     <section
