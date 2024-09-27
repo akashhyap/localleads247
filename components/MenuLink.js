@@ -6,7 +6,7 @@ import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
 
 const MenuLink = ({ blok, closeMenu }) => {
-  console.log("menu link", blok);
+  // console.log("menu link", blok);
   
   const hasSubMenu = blok?.menu?.length != 0;
 

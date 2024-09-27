@@ -79,6 +79,12 @@ h6 {
   margin-right: auto;
 }
 
+@media (max-width: 768px) {
+  .fluid_container {
+    width: calc(100% - var(--container-padding) * 1);
+  }
+}
+
 .blog_teaser .pseudo_blok {
   display: block;
   font-weight: 600;
@@ -494,7 +500,7 @@ h6 {
 }
 
 .cta-direction {
-  @apply flex justify-between gap-3 mt-10 mb-8;
+  @apply flex flex-col md:flex-row justify-between gap-3 mt-10 mb-8;
 }
 .light_text {
   line-height: 1.8;
@@ -944,5 +950,16 @@ i.icon-none {
 @media (max-width: 1499px) {
   .primary_btn {
     @apply text-base;
+  }
+}
+
+.primary_btn--big {
+  @apply px-10 py-4 text-[24px];
+}
+
+@media (max-width: 767px) {
+  .banner_simple {
+    padding-top: 30px!important;
+    padding-bottom: 30px!important;
   }
 }

@@ -5,7 +5,7 @@ import { render } from "storyblok-rich-text-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
 import Lottie from "lottie-react";
-import animationData from "../animation/lottie.json"
+import animationData from "../animation/lottie.json";
 const StickyContent = ({ blok }) => {
   const HeadingTag = blok?.title_tag || "p";
   const [content, setContent] = useState(null);
@@ -18,7 +18,7 @@ const StickyContent = ({ blok }) => {
   return (
     <div {...storyblokEditable(blok)} className="bg-[#ececec]">
       <div
-        className="px-4 grid grid-cols-2 gap-10 fluid_container sticky_section"
+        className="px-4 grid grid-cols-1 lg:grid-cols-2 gap-10 fluid_container sticky_section"
         style={{
           paddingTop: blok?.padding_top,
           paddingBottom: blok?.padding_bottom,
@@ -26,14 +26,15 @@ const StickyContent = ({ blok }) => {
       >
         {/* Left Column: Sticky Section */}
         <div
-          className="sticky top-0 self-start"
+          className="lg:sticky top-0 self-start"
           style={{ height: "fit-content" }}
         >
           <div className="uppercase mb-5">{blok?.badge}</div>
           {React.createElement(
             HeadingTag,
             {
-              className: "lg:leading-snug mb-4 font-semibold sticky_content_title",
+              className:
+                "lg:leading-snug mb-4 font-semibold sticky_content_title",
               ...storyblokEditable(blok),
             },
             content
@@ -45,7 +46,7 @@ const StickyContent = ({ blok }) => {
               fill
               className="w-full object-center object-contain"
             /> */}
-             <Lottie animationData={animationData} />
+            <Lottie animationData={animationData} />
           </div>
         </div>
 
@@ -54,6 +55,16 @@ const StickyContent = ({ blok }) => {
           {blok.content.map((nestedBlok) => (
             <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid} />
           ))}
+          <div className="text-center">
+            {blok?.button_label && blok?.button_link?.cached_url ? (
+              <Link
+                href={`/${blok.button_link.cached_url || ""}`}
+                className="primary_btn primary_btn--big"
+              >
+                {blok.button_label || "Default Label"}
+              </Link>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

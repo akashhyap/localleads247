@@ -7,7 +7,7 @@ import Link from "next/link";
 const BannerSimple = ({ blok }) => {
   return (
     <main
-      className={`px-4 ${blok?.content_alignment} ${blok?.max_width} ${
+      className={`banner_simple px-4 ${blok?.content_alignment} ${blok?.max_width} ${
         blok?.max_width ? "mx-auto" : ""
       } ${blok?.text_align}`}
       style={{
@@ -30,7 +30,7 @@ const BannerSimple = ({ blok }) => {
       <div className="pb-7" style={{ color: blok?.text_color?.color }}>
         {render(blok.content)}
       </div>
-      <div className={`flex gap-3 mt-4 mb-5 ${blok?.button_alignment}`}>
+      <div className={`flex flex-wrap gap-3 mt-4 mb-5 ${blok?.button_alignment}`}>
         <Link
           href={blok.button1_link}
           className="bttn banner1_btn_solid"
