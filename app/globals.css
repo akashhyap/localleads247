@@ -954,7 +954,7 @@ i.icon-none {
 }
 
 .primary_btn--big {
-  @apply px-10 py-4 text-[24px];
+  @apply px-10 py-4 text-lg lg:text-[24px];
 }
 
 @media (max-width: 767px) {
