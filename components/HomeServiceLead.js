@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { render } from "storyblok-rich-text-react-renderer";
 
 export default function HomeServiceLead({ blok }) {
-  console.log("HomeServiceLead", blok);
+  // console.log("HomeServiceLead", blok);
 
   return (
     <section
@@ -18,7 +18,7 @@ export default function HomeServiceLead({ blok }) {
         </div>
 
         {/* Center Image Section */}
-        <div className="col-span-full lg:col-span-6 order-3 lg:order-2 h-full w-full lg:w-auto flex justify-end">
+        <div className="col-span-full lg:col-span-6 2xl:col-span-4 order-3 lg:order-2 h-full w-full lg:w-auto flex justify-end">
           <div className="relative w-full aspect-h-9 aspect-w-16">
             {blok?.image.filename && (
               <Image
@@ -32,7 +32,7 @@ export default function HomeServiceLead({ blok }) {
         </div>
 
         {/* Right Text Section */}
-        <div className="homeservice_rt_content col-span-full lg:col-span-6 order-2 lg:order-3 mb-16">
+        <div className="homeservice_rt_content col-span-full lg:col-span-6 2xl:col-span-3 order-2 lg:order-3 mb-16">
           {render(blok?.content)}
           <a
             href={blok?.button_link.cached_url}

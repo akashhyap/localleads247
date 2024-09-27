@@ -975,3 +975,21 @@ i.icon-none {
     line-height: 1.2;
   }
 }
+
+.review_name h3{
+  @apply text-xl;
+}
+.review_name p, .review_description p {
+ @apply text-base;
+}
+
+.review {
+  @apply border border-solid border-[#fff3] p-4 rounded-lg;
+}
+
+.review_section_title {
+  @apply text-center text-white mb-24 leading-snug
+}
+.review_section_title h2{
+  @apply font-semibold
+}
