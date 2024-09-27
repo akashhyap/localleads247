@@ -937,16 +937,25 @@ i.icon-none {
   line-height: 1.2;
   margin-bottom: 20px;
 }
+
 .homeservice_description {
   margin-bottom: 100px;
 }
+@media (max-width: 767px) {
+  .homeservice_description {
+    margin-bottom: 80px;
+  }
+}
+
 .homeservice_rt_content ul,
 .homeservice_rt_content ol {
   margin-bottom: 50px;
 }
+
 .primary_btn {
   @apply bg-[#38b6ff] hover:bg-[#1a94d6] text-white p-2 px-6 py-3 rounded-full transition duration-300 text-[18px];
 }
+
 @media (max-width: 1499px) {
   .primary_btn {
     @apply text-base;
@@ -959,7 +968,10 @@ i.icon-none {
 
 @media (max-width: 767px) {
   .banner_simple {
-    padding-top: 30px!important;
-    padding-bottom: 30px!important;
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
+  .banner_simple h1 {
+    line-height: 1.2;
   }
 }
