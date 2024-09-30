@@ -82,7 +82,7 @@ export async function POST(request) {
                       "
                     >
                       <img
-                        src="https://a.storyblok.com/f/251472/294x150/1492264476/khani-logo.svg"
+                        src="https://a.storyblok.com/f/305962/409x109/c31d51634e/local-leads-logo.svg"
                         style="width:250px"
                       />
                     </p>

@@ -3,34 +3,26 @@ import React, { useEffect, useState } from "react";
 import { render } from "storyblok-rich-text-react-renderer";
 import { storyblokEditable } from "@storyblok/react";
 import Link from "next/link";
+import Image from "next/image";
 
 const BannerSimple = ({ blok }) => {
   return (
     <main
-      className={`banner_simple px-4 ${blok?.content_alignment} ${blok?.max_width} ${
-        blok?.max_width ? "mx-auto" : ""
-      } ${blok?.text_align}`}
+      className={`banner_simple px-4 ${blok?.content_alignment} ${
+        blok?.max_width
+      } ${blok?.max_width ? "mx-auto" : ""} ${blok?.text_align}`}
       style={{
         paddingTop: blok?.padding_top,
         paddingBottom: blok?.padding_bottom,
       }}
       {...storyblokEditable(blok)}
     >
-      {/* {React.createElement(
-        HeadingTag,
-        {
-          className: "font-semibold leading-[78px] tracking-tight",
-          ...storyblokEditable(blok),
-          style: {
-            color: blok?.title_color?.color,
-          },
-        },
-        content
-      )} */}
-      <div className="pb-7" style={{ color: blok?.text_color?.color }}>
+      <div className="banner_simple_intro pb-7" style={{ color: blok?.text_color?.color }}>
         {render(blok.content)}
       </div>
-      <div className={`flex flex-wrap gap-3 mt-4 mb-5 ${blok?.button_alignment}`}>
+      <div
+        className={`flex flex-wrap gap-3 mt-4 mb-5 ${blok?.button_alignment}`}
+      >
         <Link
           href={blok.button1_link}
           className="bttn banner1_btn_solid"

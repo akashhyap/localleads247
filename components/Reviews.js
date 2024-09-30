@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { render } from "storyblok-rich-text-react-renderer";
 
 export default function Reviews({ blok }) {
-  console.log("Reviews", blok);
+  // console.log("Reviews", blok);
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating); // Full stars
     const halfStar = rating % 1 !== 0; // Check if there's a half star

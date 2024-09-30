@@ -976,6 +976,22 @@ i.icon-none {
   }
 }
 
+.banner_simple_intro h1 i{
+  @apply relative not-italic;
+}
+
+.banner_simple_intro h1 i::after {
+  
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 32px;
+    background: url('https://a.storyblok.com/f/305962/0x0/d8e9bfd9bc/squiggle-underline.svg?cv=1727693350939') center no-repeat;
+    bottom: -10px;
+    left: 0;
+
+}
+
 .review_name h3{
   @apply text-xl;
 }
@@ -993,3 +1009,4 @@ i.icon-none {
 .review_section_title h2{
   @apply font-semibold
 }
+
