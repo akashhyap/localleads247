@@ -20,6 +20,8 @@ import MenuLink from "./MenuLink";
 import HomeServiceLead from "./HomeServiceLead";
 import ReviewSection from "./ReviewSection";
 import Reviews from "./Reviews";
+import SubmenuLink from "./SubmenuLink";
+import ImageTextSplit from "./ImageTextSplit";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -37,8 +39,6 @@ import Reviews from "./Reviews";
 // import ImageOverlayCard from "./ImageOverlayCard";
 // import CardItem from "./CardItem";
 // import RelatedArticles from "./RelatedArticles";
-// import SubmenuLink from "./SubmenuLink";
-// import ImageTextSplit from "./ImageTextSplit";
 // import ArticleContentArea from "./ArticleContentArea";
 // import Images from "./Images";
 // import ContactForm from "./Contact";
@@ -71,9 +71,11 @@ storyblokInit({
     footer_link: FooterLink,
     marketing_funnel: MarketingFunnel,
     menu_link: MenuLink,
+    submenu_link: SubmenuLink,
     home_service_lead: HomeServiceLead,
     review_section: ReviewSection,
     reviews: Reviews,
+    "image-text-split": ImageTextSplit,
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,
@@ -92,7 +94,6 @@ storyblokInit({
     // "card-item": CardItem,
     // "related-articles": RelatedArticles,
     // config: Config,
-    // submenu_link: SubmenuLink,
     // "image-text-split": ImageTextSplit,
     // "article-content-area": ArticleContentArea,
     // images: Images,

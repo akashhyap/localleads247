@@ -19,7 +19,7 @@ const ImageTextSplit = ({ blok }) => {
           blok?.reverse ? "flex-row-reverse" : ""
         } ${blok?.alignItem}`}
       >
-        {blok?.image?.filename && <div className="flex p-3 w-full md:w-1/2 rounded-xl border overflow-hidden">
+        {blok?.image?.filename && <div className="flex p-3 w-full md:w-1/2 overflow-hidden">
           <div className="relative w-full aspect-w-16 aspect-h-9">
             <Image
               src={blok?.image?.filename}
@@ -39,7 +39,7 @@ const ImageTextSplit = ({ blok }) => {
             ) : (
               <Link
                 href={`/${blok?.button.cached_url}`}
-                className={`inline-block text-white text-sm font-medium bg-poppy-800 rounded-lg ${sizeClass}`}
+                className={`inline-block primary_btn ${sizeClass}`}
               >
                 {blok?.button_label}
               </Link>

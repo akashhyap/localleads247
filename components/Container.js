@@ -10,8 +10,9 @@ const Container = ({ blok }) => {
     <div
       className={`relative fluid-layout md:w-6/12 mb-10 mt-5 lg:mt-2 m-auto ${
         full_width ? "md:w-full" : ""
-      }`}
+      } bg-[${blok?.bg_color?.color}]`}
       {...storyblokEditable(blok)}
+      style={{paddingTop: blok?.padding_top, paddingBottom: blok?.padding_bottom}}
     >
       {blok.content.map((nestedBlok) => (
         <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid} />

@@ -17,54 +17,61 @@ const BannerSimple = ({ blok }) => {
       }}
       {...storyblokEditable(blok)}
     >
-      <div className="banner_simple_intro pb-7" style={{ color: blok?.text_color?.color }}>
+      <div
+        className="banner_simple_intro pb-7"
+        style={{ color: blok?.text_color?.color }}
+      >
         {render(blok.content)}
       </div>
       <div
         className={`flex flex-wrap gap-3 mt-4 mb-5 ${blok?.button_alignment}`}
       >
-        <Link
-          href={blok.button1_link}
-          className="bttn banner1_btn_solid"
-          style={{
-            backgroundColor: blok?.button1_bg,
-            color: blok?.button1_text,
-            borderColor: blok?.button1_border_color,
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = blok?.button1_hover_bg)
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = blok?.button1_bg)
-          }
-        >
-          {blok.button1_label}
-        </Link>
-        <Link
-          href={blok.button2_link}
-          className="bttn banner1_btn_transparent inline-flex transition duration-300"
-          style={{
-            backgroundColor: blok?.button2_bg,
-            color: blok?.button2_text,
-            borderColor: blok?.button2_border_color,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = blok?.button2_hover_bg;
-            e.currentTarget.style.color = blok?.button2_text_hover;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = blok?.button2_bg;
-            e.currentTarget.style.color = blok?.button2_text;
-          }}
-        >
-          {blok.button2_label}
-          <span
-            className="ml-2 transition-transform duration-300 transform hover:translate-x-1"
-            aria-hidden="true"
+        {blok?.button1_label && blok?.button1_link?.cached_url ? (
+          <Link
+            href={blok.button1_link}
+            className="bttn banner1_btn_solid"
+            style={{
+              backgroundColor: blok?.button1_bg,
+              color: blok?.button1_text,
+              borderColor: blok?.button1_border_color,
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = blok?.button1_hover_bg)
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = blok?.button1_bg)
+            }
           >
-            →
-          </span>
-        </Link>
+            {blok.button1_label}
+          </Link>
+        ) : null}
+        {blok?.button2_label && blok?.button2_link?.cached_url ? (
+          <Link
+            href={blok.button2_link}
+            className="bttn banner1_btn_transparent inline-flex transition duration-300"
+            style={{
+              backgroundColor: blok?.button2_bg,
+              color: blok?.button2_text,
+              borderColor: blok?.button2_border_color,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = blok?.button2_hover_bg;
+              e.currentTarget.style.color = blok?.button2_text_hover;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = blok?.button2_bg;
+              e.currentTarget.style.color = blok?.button2_text;
+            }}
+          >
+            {blok.button2_label}
+            <span
+              className="ml-2 transition-transform duration-300 transform hover:translate-x-1"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          </Link>
+        ) : null}
       </div>
       <div
         style={{

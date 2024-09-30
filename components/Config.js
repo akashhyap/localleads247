@@ -87,13 +87,15 @@ const Config = ({ blok }) => {
           </div>
           {/* Menu items */}
           <nav className="font-sans font-medium text-lg hidden md:flex md:flex-1 md:justify-between md:items-center ml-0 md:ml-10">
-            {blok?.header_menu?.map((nestedBlok) => (
-              <StoryblokComponent
-                blok={nestedBlok}
-                key={nestedBlok._uid}
-                closeMenu={() => setMenuOpen(false)}
-              />
-            ))}
+            <div className="left_menu flex gap-3 md:items-center">
+              {blok?.header_menu?.map((nestedBlok) => (
+                <StoryblokComponent
+                  blok={nestedBlok}
+                  key={nestedBlok._uid}
+                  closeMenu={() => setMenuOpen(false)}
+                />
+              ))}
+            </div>
             <div className="right_menu flex gap-3">
               {blok?.right_menu?.map((rightBlok) => (
                 <StoryblokComponent
