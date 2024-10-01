@@ -18,6 +18,7 @@ const ImageTextSplit = ({ blok }) => {
         className={`image_text_split container mx-auto flex flex-wrap md:flex-nowrap gap-6 px-7 mb-10 ${
           blok?.reverse ? "flex-row-reverse" : ""
         } ${blok?.alignItem}`}
+        style={{paddingTop: blok?.padding_top, paddingBottom: blok?.padding_bottom}}
       >
         {blok?.image?.filename && <div className="flex p-3 w-full md:w-1/2 overflow-hidden">
           <div className="relative w-full aspect-w-16 aspect-h-9">

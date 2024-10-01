@@ -22,6 +22,9 @@ import ReviewSection from "./ReviewSection";
 import Reviews from "./Reviews";
 import SubmenuLink from "./SubmenuLink";
 import ImageTextSplit from "./ImageTextSplit";
+import Grid from "./Grid";
+import InnerGrid from "./InnerGrid";
+import SimpleContentGrid from "./SimpleContentGrid";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -76,6 +79,9 @@ storyblokInit({
     review_section: ReviewSection,
     reviews: Reviews,
     "image-text-split": ImageTextSplit,
+    grid: Grid,
+    inner_grid: InnerGrid,
+    simple_content_grid: SimpleContentGrid,
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,

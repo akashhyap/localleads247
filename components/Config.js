@@ -6,6 +6,7 @@ import { Transition } from "@headlessui/react";
 import CustomStoryblokComponent from "./StoryblokMenuComponent";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
+import { render } from "storyblok-rich-text-react-renderer";
 
 const Config = ({ blok }) => {
   // console.log("config", blok);
@@ -39,6 +40,20 @@ const Config = ({ blok }) => {
   }, [lastScrollY]);
   return (
     <>
+      {blok?.content && (
+        <div
+          className={`top_header text-center text-[17px]`}
+          style={{
+            paddingTop: blok?.padding_top,
+            paddingBottom: blok.paddingBottom,
+            backgroundColor: blok?.bg_color?.color,
+            color: blok?.top_text_color.color
+
+          }}
+        >
+          {render(blok?.content)}
+        </div>
+      )}
       <div
         className={`header_outer ${headerStyle} header-transition py-3 px-4 sm:px-6 xl:px-8 rounded-lg z-50`}
       >
