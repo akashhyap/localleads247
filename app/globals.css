@@ -1091,3 +1091,8 @@ i.icon-none {
 .drop_link:last-child {
   border-bottom: none;
 }
+@media (max-width: 767px) {
+  .right_menu {
+    margin-top: 30px;
+  }
+}

@@ -59,7 +59,7 @@ const MenuLink = ({ blok, closeMenu }) => {
           <Popover key={blok._uid} className="md:mt-4 md:hidden">
             {({ open }) => (
               <>
-                <Popover.Button className="flex justify-between items-center w-full md:py-2 mb-2 md:mb-0 text-black hover:text-gray-900">
+                <Popover.Button className="flex justify-between text-base leading-snug items-center w-full md:py-2 mb-2 md:mb-0 text-black hover:text-gray-900">
                   {blok.name}
                   <span>
                     {open ? (
@@ -80,13 +80,13 @@ const MenuLink = ({ blok, closeMenu }) => {
                 >
                   <Popover.Panel
                     static
-                    className="flex flex-col mb-2 bg-slate-100 pl-3 pt-3 rounded-sm"
+                    className="flex flex-col mb-2 bg-[#35384b] pl-3 pt-3 rounded-lg"
                   >
                     {blok?.menu?.map((subItem) => (
                       <Link
                         key={subItem._uid}
                         href={`/${subItem.link.cached_url}`}
-                        className="mb-2 md:mb-0 text-black hover:text-gray-900"
+                        className="drop_link mb-2 md:mb-0 text-white hover:text-gray-200 text-[15px]"
                         onClick={closeMenu}
                         aria-label="menu link"
                       >
@@ -100,7 +100,7 @@ const MenuLink = ({ blok, closeMenu }) => {
           </Popover>
         </>
       ) : (
-        <div className="relative text-left z-10 mb-2 md:mb-0">
+        <div className="relative text-left z-10 mb-0 lg:mb-2 md:mb-0">
           {blok?.link.cached_url !== "search" ? (
             blok?.isButton ? (
               <Link
@@ -115,7 +115,7 @@ const MenuLink = ({ blok, closeMenu }) => {
             ) : (
               <Link
                 href={`/${blok.link.cached_url}`}
-                className="menulinks text-black hover:text-gray-900"
+                className="menulinks text-base leading-snug text-black hover:text-gray-900"
                 onClick={closeMenu}
                 aria-label="menu link"
               >
