@@ -100,7 +100,7 @@ const MenuLink = ({ blok, closeMenu }) => {
           </Popover>
         </>
       ) : (
-        <div className="relative text-left z-10 mb-0 lg:mb-2 md:mb-0">
+        <div className="relative text-left z-10 mb-0">
           {blok?.link.cached_url !== "search" ? (
             blok?.isButton ? (
               <Link
