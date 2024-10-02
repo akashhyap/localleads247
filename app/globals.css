@@ -309,9 +309,7 @@ h6 {
 
 /* Base style for menu links */
 .menulinks {
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
+  @apply relative rounded-full overflow-hidden
 }
 
 /* Media query for larger screens */
@@ -324,7 +322,7 @@ h6 {
   .menulinks::before {
     content: "";
     position: absolute;
-    border-radius: 10px;
+    border-radius: 9999px;
     top: 0;
     left: 50%;
     right: 50%;
@@ -999,6 +997,21 @@ i.icon-none {
     center no-repeat;
   bottom: -10px;
   left: 0;
+  /* Initial state to hide the underline */
+  clip-path: inset(0 100% 0 0);
+
+  /* Animation properties */
+  animation: reveal-underline 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* Define the keyframes for the animation */
+@keyframes reveal-underline {
+  0% {
+    clip-path: inset(0 100% 0 0); /* Hidden */
+  }
+  100% {
+    clip-path: inset(0 0 0 0); /* Fully revealed */
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -1036,13 +1049,13 @@ i.icon-none {
 
 @media (max-width: 1399px) {
   .simple_content_grid .sm_grid {
-    @apply !grid-cols-2
+    @apply !grid-cols-2;
   }
 }
 
 @media (max-width: 1199px) {
   .simple_content_grid .inner_grid {
-    @apply !col-span-full
+    @apply !col-span-full;
   }
   .simple_content_grid h2 {
     line-height: 1.2;
@@ -1050,7 +1063,7 @@ i.icon-none {
 }
 
 .simple_content_grid h2 {
-  font-size: 2.0em;
+  font-size: 2em;
   padding-top: 0;
 }
 .simple_content_grid h3 {
@@ -1060,7 +1073,7 @@ i.icon-none {
 }
 
 .simple_content_grid h3:before {
-  content: '';
+  content: "";
   position: absolute;
   top: -17px;
   left: 2px;

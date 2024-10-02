@@ -115,7 +115,7 @@ const MenuLink = ({ blok, closeMenu }) => {
             ) : (
               <Link
                 href={`/${blok.link.cached_url}`}
-                className="0001 menulinks text-black hover:text-gray-900"
+                className="menulinks text-black hover:text-gray-900"
                 onClick={closeMenu}
                 aria-label="menu link"
               >
