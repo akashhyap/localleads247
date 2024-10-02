@@ -1001,7 +1001,7 @@ i.icon-none {
   clip-path: inset(0 100% 0 0);
 
   /* Animation properties */
-  animation: reveal-underline 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: reveal-underline 2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
 /* Define the keyframes for the animation */
