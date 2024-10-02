@@ -309,7 +309,7 @@ h6 {
 
 /* Base style for menu links */
 .menulinks {
-  @apply relative rounded-full overflow-hidden
+  @apply relative rounded-full overflow-hidden;
 }
 
 /* Media query for larger screens */
@@ -1081,4 +1081,13 @@ i.icon-none {
   height: 10px;
   background-color: #35384b;
   transform: rotate(45deg);
+}
+
+.drop_link {
+  border-bottom: 1px solid #7c7c7c75;
+  padding-bottom: 9px;
+}
+
+.drop_link:last-child {
+  border-bottom: none;
 }
