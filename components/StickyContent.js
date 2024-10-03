@@ -39,6 +39,9 @@ const StickyContent = ({ blok }) => {
             },
             content
           )}
+          <div className="[&>h3]:lg:leading-snug [&>h3]:mb-4 [&>h3]:font-semibold sticky_content_title">
+            {render(blok?.content_left)}
+          </div>
           <div className="relative w-full aspect-w-16 aspect-h-9">
             {/* <Image
               src={blok?.image?.filename}

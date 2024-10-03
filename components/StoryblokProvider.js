@@ -25,6 +25,8 @@ import ImageTextSplit from "./ImageTextSplit";
 import Grid from "./Grid";
 import InnerGrid from "./InnerGrid";
 import SimpleContentGrid from "./SimpleContentGrid";
+import Faq from "./Faq";
+import FaqContent from "./FaqContent";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -51,8 +53,6 @@ import SimpleContentGrid from "./SimpleContentGrid";
 // import SmallDogs from "./SmallDogs";
 // import BigDogs from "./BigDogs";
 // import Products from "./Products";
-// import Faq from "./Faq";
-// import FaqContent from "./FaqContent";
 // import SearchBar from "./SearchBar";
 
 /** 3. Initialize it as usual */
@@ -82,6 +82,8 @@ storyblokInit({
     grid: Grid,
     inner_grid: InnerGrid,
     simple_content_grid: SimpleContentGrid,
+    faq: Faq,
+    faq_content: FaqContent,
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,
@@ -110,8 +112,7 @@ storyblokInit({
     // "small-dogs": SmallDogs,
     // "big-dogs": BigDogs,
     // products: Products,
-    // faq: Faq,
-    // faqContent: FaqContent,
+    
     // htmlElements: HtmlElements,
     // searchBar: SearchBar,
     // menu: Menu,
