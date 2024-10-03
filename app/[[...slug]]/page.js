@@ -166,7 +166,7 @@ export default async function Page({ params }) {
   const isFAQComponent = story.name === "faq";
   const schema = getSchemaForStory(story);
 
-  console.log("story", story.content);
+  // console.log("story", story.content);
 
   return (
     <>

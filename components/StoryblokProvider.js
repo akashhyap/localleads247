@@ -27,6 +27,8 @@ import InnerGrid from "./InnerGrid";
 import SimpleContentGrid from "./SimpleContentGrid";
 import Faq from "./Faq";
 import FaqContent from "./FaqContent";
+import Footer_1 from "./Footer_1";
+import FooterColumn from "./FooterColumn";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -84,6 +86,8 @@ storyblokInit({
     simple_content_grid: SimpleContentGrid,
     faq: Faq,
     faq_content: FaqContent,
+    footer_1: Footer_1,
+    footer_column: FooterColumn,
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,

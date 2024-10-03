@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { StoryblokComponent } from "@storyblok/react";
 import Image from "next/image";
 import React from "react";
@@ -7,20 +7,17 @@ import { render } from "storyblok-rich-text-react-renderer";
 const Footer = ({ blok }) => {
   // console.log("footer", blok);
   return (
-    <div className="footer bg-[#fcf2eb] pt-9">
+    <div className="footer pt-16">
       <div className="fluid_container">
-        <div className="flex flex-wrap justify-between items-center">
-          <div className="relative">
-            <Image src={blok?.logo.filename} alt="" width={250} height={150} />
-          </div>
-          <div className="flex flex-wrap basis-full md:basis-auto gap-3 lg:gap-5 mt-5 lg:mt-0">
-            {blok?.footer.map((nestedBlok) => (
-              <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {blok?.footer.map((nestedBlok) => (
+            <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid} />
+          ))}
         </div>
       </div>
-      <div className="py-3 mt-9 text-xs text-center text-white bg-black">{render(blok?.copyright)}</div>
+      <div className="py-3 mt-16 text-xs text-center text-white bg-black">
+        {render(blok?.copyright)}
+      </div>
     </div>
   );
 };

@@ -1096,3 +1096,18 @@ i.icon-none {
     margin-top: 30px;
   }
 }
+
+.footer_section {
+  @apply flex items-center
+}
+.footer_column {
+  @apply flex flex-col mt-5 md:mt-0
+}
+
+.footer_column h3 {
+  @apply text-[15px] font-medium text-[#35384b] uppercase mb-0 pb-2
+}
+
+.footer_column a {
+  @apply text-[15px] font-medium text-[#35384b] hover:text-gray-900 leading-loose
+}
