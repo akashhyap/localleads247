@@ -1,16 +1,25 @@
-export function sendEmail(data) {
-    const apiEndpoint = "/api/email";
-  
-    return fetch(apiEndpoint, {
+export async function sendEmail(data) {
+  const apiEndpoint = "/api/email";
+  try {
+    const response = await fetch(apiEndpoint, {
       method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.error);
-        }
-        return response;
-      });
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Server responded with an error:", response.status, errorData);
+      throw new Error(`Server error: ${errorData.error || response.statusText}`);
+    }
+    
+    const result = await response.json();
+    console.log("Email sent successfully:", result);
+    return result;
+  } catch (error) {
+    console.error("Error in sendEmail function:", error);
+    throw error;
   }
-  
+}

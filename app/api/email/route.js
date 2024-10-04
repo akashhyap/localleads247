@@ -2,11 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function POST(request) {
-  const { email, name, message } = await request.json();
+  console.log("Request received:", request);
+  try {
+    const { email, name, message } = await request.json();
 
-  const transport = nodemailer.createTransport({
-    service: "gmail",
-    /* 
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      /* 
       setting service as 'gmail' is same as providing these settings:
       host: "smtp.gmail.com",
       port: 465,
@@ -15,19 +17,19 @@ export async function POST(request) {
       Or you can go use these well known services and their settings at
       https://github.com/nodemailer/nodemailer/blob/master/lib/well-known/services.json
     */
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.APP_PW,
-    },
-  });
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.APP_PW,
+      },
+    });
 
-  const mailOptions = {
-    from: process.env.EMAIL,
-    to: process.env.EMAIL,
-    // cc: email, (uncomment this line if you want to send a copy to the sender)
-    subject: `Message from ${name} (${email})`,
-    // text: message,
-    html: `
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: process.env.EMAIL,
+      // cc: email, (uncomment this line if you want to send a copy to the sender)
+      subject: `Message from ${name} (${email})`,
+      // text: message,
+      html: `
     <html>
     <head>
       <meta name="viewport" content="width=device-width" />
@@ -127,23 +129,30 @@ export async function POST(request) {
     </body>
   </html>
     `,
-  };
+    };
 
-  const sendMailPromise = () =>
-    new Promise((resolve, reject) => {
-      transport.sendMail(mailOptions, function (err) {
-        if (!err) {
-          resolve("Email sent");
-        } else {
-          reject(err.message);
-        }
+    const sendMailPromise = () =>
+      new Promise((resolve, reject) => {
+        transport.sendMail(mailOptions, function (err) {
+          if (!err) {
+            resolve("Email sent");
+          } else {
+            reject(err.message);
+          }
+        });
       });
-    });
 
-  try {
-    await sendMailPromise();
-    return NextResponse.json({ message: "Email sent" });
+    try {
+      await sendMailPromise();
+      return NextResponse.json({ message: "Email sent" });
+    } catch (err) {
+      return NextResponse.json({ error: err }, { status: 500 });
+    }
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 500 });
+    console.error("Email sending error:", err);
+    return NextResponse.json(
+      { error: "Failed to send email", details: err.message },
+      { status: 500 }
+    );
   }
 }
