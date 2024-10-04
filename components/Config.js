@@ -61,7 +61,7 @@ const Config = ({ blok }) => {
           {/* Site Logo */}
           <div className="flex justify-start">
             <Link href="/" className="relative">
-              <span className="sr-only">Khani</span>
+              <span className="sr-only">Local Lead</span>
               {blok?.logo && (
                 <Image
                   src={blok?.logo?.filename}
@@ -162,7 +162,7 @@ const Config = ({ blok }) => {
             <div className="px-5 pt-4 flex items-center justify-between">
               <div>
                 <Link href="/" className="relative">
-                  <span className="sr-only">Khani</span>
+                  <span className="sr-only">Local Lead</span>
                   {blok?.logo && (
                     <Image
                       src={blok?.logo?.filename}

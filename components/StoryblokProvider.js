@@ -29,6 +29,7 @@ import Faq from "./Faq";
 import FaqContent from "./FaqContent";
 import Footer_1 from "./Footer_1";
 import FooterColumn from "./FooterColumn";
+import Contact from "./Contact";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -88,6 +89,7 @@ storyblokInit({
     faq_content: FaqContent,
     footer_1: Footer_1,
     footer_column: FooterColumn,
+    contact_us: Contact,
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,

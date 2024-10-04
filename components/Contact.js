@@ -1,9 +1,11 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const Contact = ({ blok }) => {
+  const [isClient, setIsClient] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -44,24 +46,26 @@ const Contact = ({ blok }) => {
     setIsLoading(false);
   }
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const inlineStyle = {
     paddingTop: blok?.paddingTop,
     paddingBottom: blok?.paddingBottom,
   };
 
-  return (
-    <div>
-      <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight pt-5 mb-7 mt-6 leading-tight lg:leading-[3.25rem]">
-        {blok?.title}
-      </h1>
+  if (!isClient || !blok) {
+    return null; // or a loading placeholder if preferred
+  }
 
-      <div
-        className={`grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10 mb-10 container ${
-          blok.maxWidth
-        } ${blok.maxWidth ? "mx-auto" : ""}`}
-      >
+  return (
+    <div className="contact_us container max-w-3xl mx-auto">
+      <h1 className="pt-5 mb-7 mt-6">{blok?.title}</h1>
+
+      <div>
         {/* Form */}
-        <div className="p-5 md:p-8 shadow-2xl rounded-lg">
+        <div className="p-5 md:p-12 shadow-2xl rounded-lg">
           <form onSubmit={handleSubmit(onSubmit)} style={inlineStyle}>
             <div className="mb-5">
               <label
@@ -131,7 +135,7 @@ const Contact = ({ blok }) => {
                   {responseMessage}
                 </p>
               ) : (
-                <button className="hover:shadow-form rounded-md bg-black py-3 px-8 text-base font-semibold text-white outline-none">
+                <button className="primary_btn primary_btn--small w-full">
                   Submit
                 </button>
               )}

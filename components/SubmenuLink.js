@@ -3,8 +3,8 @@ import { storyblokEditable,StoryblokComponent } from "@storyblok/react/rsc";
 const SubmenuLink = ({ blok }) => {
 
   return (
-    <div className="">
-      <span className="">
+    <div>
+      <span>
         {blok?.name}
       </span>
     </div>

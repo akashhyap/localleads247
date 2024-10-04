@@ -974,6 +974,10 @@ i.icon-none {
   @apply px-10 py-4 text-lg lg:text-[24px];
 }
 
+.primary_btn--small{
+  @apply px-4 py-2;
+}
+
 @media (max-width: 767px) {
   .banner_simple {
     padding-top: 30px !important;
@@ -1105,9 +1109,13 @@ i.icon-none {
 }
 
 .footer_column h3 {
-  @apply text-[15px] font-medium text-[#35384b] uppercase mb-0 pb-2
+  @apply text-[15px] font-medium text-[#35384b] mb-0 pb-2
 }
 
 .footer_column a {
-  @apply text-[15px] font-medium text-[#35384b] hover:text-gray-900 leading-loose
+  @apply text-[15px] font-normal text-[#35384b] hover:text-gray-900 leading-loose
+}
+
+.contact_us h1{
+  @apply text-3xl font-semibold text-center
 }

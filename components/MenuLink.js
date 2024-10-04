@@ -4,10 +4,18 @@ import Link from "next/link";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 const MenuLink = ({ blok, closeMenu }) => {
   // console.log("menu link", blok);
-  
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient || !blok) {
+    return null; // or a loading placeholder if preferred
+  }
   const hasSubMenu = blok?.menu?.length != 0;
 
   return (
@@ -108,7 +116,6 @@ const MenuLink = ({ blok, closeMenu }) => {
                 className={`py-3 px-4 rounded-full text-base bg-[${blok?.bg_color.color}] hover:bg-opacity-90 transition-colors text-white`}
                 onClick={closeMenu}
                 aria-label="menu link"
-               
               >
                 {blok.name}
               </Link>
