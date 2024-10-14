@@ -354,7 +354,7 @@ h6 {
   }
 }
 .bttn {
-  @apply font-sans text-lg font-medium border border-solid rounded-full py-5 pl-6 pr-6;
+  @apply font-sans text-lg font-medium border border-solid rounded-full py-5 pl-7 pr-7;
 }
 
 @media (min-width: 1024px) {

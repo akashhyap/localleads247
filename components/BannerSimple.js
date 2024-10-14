@@ -69,7 +69,7 @@ const BannerSimple = ({ blok }) => {
                 e.currentTarget.style.color = blok?.button1_text;
               }}
             >
-              {blok.button1_label}
+              {blok.button1_label} →
             </Link>
           ) : null}
           {blok?.button2_label && blok?.button2_link?.cached_url ? (
