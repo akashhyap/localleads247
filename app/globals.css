@@ -354,8 +354,20 @@ h6 {
   }
 }
 .bttn {
-  @apply font-sans text-lg font-medium border border-solid rounded-full py-5 pl-7 pr-7;
+  @apply relative overflow-hidden font-sans text-lg font-medium border border-solid rounded-full py-5 pl-7 pr-7 transition-all;
 }
+
+.arrow-icon {
+  display: inline-block;
+  margin-left: 5px;
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.bttn:hover .arrow-icon {
+  transform: translateX(5px); /* Move the arrow 5px to the right */
+  transition: transform 0.3s ease;
+}
+
 
 @media (min-width: 1024px) {
   .banner1_btn_solid {
@@ -1059,7 +1071,8 @@ i.icon-none {
     padding-bottom: 30px !important;
   }
   .banner_simple h1 {
-    line-height: 1.2;
+    font-size: 33px;
+    line-height: 1.4;
   }
 }
 
@@ -1090,9 +1103,6 @@ i.icon-none {
   .banner_simple_intro h1 i::after {
     height: 17px;
     bottom: -8px;
-  }
-  .banner_simple_intro p {
-    line-height: 1.7;
   }
 }
 
@@ -1140,8 +1150,8 @@ i.icon-none {
 
 @media (max-width: 767px) {
   .banner_simple_intro h1 i::after {
-    height: 18px;
-    bottom: -6px;
+    height: 24px;
+    bottom: -12px;
   }
 }
 

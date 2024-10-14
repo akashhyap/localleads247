@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MdLockClock } from "react-icons/md";
 import { IoIosStar } from "react-icons/io";
+import { GoArrowRight } from "react-icons/go";
 
 const BannerSimple = ({ blok }) => {
   const renderStars = (rating) => {
@@ -54,7 +55,7 @@ const BannerSimple = ({ blok }) => {
           {blok?.button1_label && blok?.button1_link?.cached_url ? (
             <Link
               href={blok.button1_link}
-              className="bttn banner1_btn_solid"
+              className="md:flex md:items-center bttn banner1_btn_solid"
               style={{
                 backgroundColor: blok?.button1_bg,
                 color: blok?.button1_text,
@@ -69,7 +70,7 @@ const BannerSimple = ({ blok }) => {
                 e.currentTarget.style.color = blok?.button1_text;
               }}
             >
-              {blok.button1_label} →
+              {blok.button1_label} <GoArrowRight className="arrow-icon" />
             </Link>
           ) : null}
           {blok?.button2_label && blok?.button2_link?.cached_url ? (
