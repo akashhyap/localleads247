@@ -11,6 +11,7 @@ body {
   font-size: 20px;
   line-height: 38px;
   background-color: #f7f7f7;
+  color: #35384b;
   @apply font-sans;
 }
 
@@ -23,11 +24,13 @@ body {
 h1 {
   @apply lg:leading-snug mb-4 font-sans font-semibold;
   font-size: clamp(2rem, 5vw + 1rem, 3.5rem);
+  letter-spacing: -0.02em;
 }
 
 h2 {
   @apply lg:leading-[1.2] mb-4 font-sans tracking-tight font-medium;
   font-size: clamp(1.8rem, 4vw + 0.9rem, 3rem);
+  letter-spacing: -0.02em;
 }
 
 h3,
@@ -352,6 +355,78 @@ h6 {
 }
 .bttn {
   @apply font-sans text-lg font-medium border border-solid rounded-full py-5 pl-6 pr-6;
+}
+
+@media (min-width: 1024px) {
+  .banner1_btn_solid {
+    font-size: 1.38rem;
+  }
+}
+
+.banner_simple_content2 {
+  @apply flex justify-center md:items-center md:gap-2 text-sm;
+}
+
+@media (max-width: 767px) {
+  .banner_simple_content2 {
+    max-width: 81%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.banner_simple .rating_wrapper {
+  @apply flex justify-center items-center gap-10 mt-10;
+}
+
+@media (max-width: 767px) {
+  .banner_simple .rating_wrapper {
+    @apply flex-col gap-4;
+  }
+}
+
+.banner_simple .rating {
+  @apply flex  justify-center items-center gap-2;
+}
+
+@media (max-width: 767px) {
+  .banner_simple .rating {
+    @apply flex-col gap-4;
+  }
+}
+
+.banner_simple .rating span,
+.community_wrapper span {
+  @apply text-base font-semibold;
+}
+
+.community_wrapper {
+  @apply flex justify-center items-center gap-2;
+}
+
+@media (max-width: 767px) {
+  .community_wrapper {
+    @apply flex-col gap-4 mt-5;
+  }
+}
+
+.community_images {
+  @apply flex relative;
+}
+
+.community_images img {
+  @apply flex object-cover object-center rounded-full border-[3px] border-white;
+}
+.community_images img:nth-child(1) {
+  z-index: 10;
+}
+.community_images img:nth-child(2) {
+  z-index: 9;
+  margin-left: -10px;
+}
+.community_images img:nth-child(3) {
+  z-index: 8;
+  margin-left: -10px;
 }
 
 .big_bullets {
@@ -974,7 +1049,7 @@ i.icon-none {
   @apply px-10 py-4 text-lg lg:text-[24px];
 }
 
-.primary_btn--small{
+.primary_btn--small {
   @apply px-4 py-2;
 }
 
@@ -1006,6 +1081,44 @@ i.icon-none {
 
   /* Animation properties */
   animation: reveal-underline 2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@media (min-width: 767px) and (max-width: 1023px) {
+  .banner_simple_intro h1 {
+    line-height: 60px;
+  }
+  .banner_simple_intro h1 i::after {
+    height: 17px;
+    bottom: -8px;
+  }
+  .banner_simple_intro p {
+    line-height: 1.7;
+  }
+}
+
+@media (min-width: 1366px) {
+  .banner_simple_intro h1 {
+    font-size: 65px;
+    line-height: 78px;
+  }
+}
+
+.banner_simple_inner {
+  padding: 0 1.5rem;
+}
+@media (min-width: 1279px) {
+  .banner_simple_inner {
+    padding: 0 10rem;
+  }
+}
+
+.eyebrow_text {
+  @apply bg-[#d9eaf5] text-[#38b6ff] font-semibold text-base rounded-3xl px-4 py-1;
+}
+@media (max-width: 767px) {
+  .eyebrow_text {
+    @apply inline-block;
+  }
 }
 
 /* Define the keyframes for the animation */
@@ -1102,20 +1215,53 @@ i.icon-none {
 }
 
 .footer_section {
-  @apply flex items-center
+  @apply flex items-center;
 }
 .footer_column {
-  @apply flex flex-col mt-5 md:mt-0
+  @apply flex flex-col mt-5 md:mt-0;
 }
 
 .footer_column h3 {
-  @apply text-[15px] font-medium text-[#35384b] mb-0 pb-2
+  @apply text-[15px] font-medium text-[#35384b] mb-0 pb-2;
 }
 
 .footer_column a {
-  @apply text-[15px] font-normal text-[#35384b] hover:text-gray-900 leading-loose
+  @apply text-[15px] font-normal text-[#35384b] hover:text-gray-900 leading-loose;
 }
 
-.contact_us h1{
-  @apply text-3xl font-semibold text-center
+.contact_us h1 {
+  @apply text-3xl font-semibold text-center;
+}
+
+.homeservice_rt_content ul li {
+  @apply relative flex leading-7 mb-4 gap-3;
+}
+
+.homeservice_rt_content ul li::before {
+  content: "";
+  margin-top: 7px;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  border-radius: 50%;
+  background-color: #f27859;
+  animation: pulse-animation 2.5s linear infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 109, 74, 0.7), 0 0 0 0 rgba(255, 109, 74, 0.7);
+  }
+  40% {
+    box-shadow: 0 0 0 12px rgba(255, 109, 74, 0.0),
+      0 0 0 0 rgba(255, 109, 74, 0.7);
+  }
+  80% {
+    box-shadow: 0 0 0 12px rgba(255, 109, 74, 0.0),
+      0 0 0 8px rgba(255, 109, 74, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 109, 74, 0.0),
+      0 0 0 8px rgba(255, 109, 74, 0);
+  }
 }

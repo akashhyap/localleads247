@@ -30,6 +30,7 @@ import FaqContent from "./FaqContent";
 import Footer_1 from "./Footer_1";
 import FooterColumn from "./FooterColumn";
 import Contact from "./Contact";
+import Images from "./Images";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -48,7 +49,6 @@ import Contact from "./Contact";
 // import CardItem from "./CardItem";
 // import RelatedArticles from "./RelatedArticles";
 // import ArticleContentArea from "./ArticleContentArea";
-// import Images from "./Images";
 // import ContactForm from "./Contact";
 // import SubscribeNewsletter from "./SubscribeNewsletter.js";
 // import Diet from "./Diet";
@@ -90,6 +90,7 @@ storyblokInit({
     footer_1: Footer_1,
     footer_column: FooterColumn,
     contact_us: Contact,
+    images: Images,
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,
@@ -110,7 +111,6 @@ storyblokInit({
     // config: Config,
     // "image-text-split": ImageTextSplit,
     // "article-content-area": ArticleContentArea,
-    // images: Images,
     // contact: ContactForm,
     // subscribeNewsletter: SubscribeNewsletter,
     // diet: Diet,
