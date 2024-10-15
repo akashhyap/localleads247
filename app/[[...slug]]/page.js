@@ -154,7 +154,7 @@ export default async function Page({ params }) {
   //   });
   // })
 
-  const dynamicReviews = story.content.body.flatMap((item) => {
+  const dynamicReviews = story.content.body.map((item) => {
     return item?.reviews?.map((review) => ({
       author: review.name,
       datePublished: review.published_at || "Unknown Date", // Make sure to provide a valid date or a placeholder
