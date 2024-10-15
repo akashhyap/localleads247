@@ -148,26 +148,28 @@ export default async function Page({ params }) {
   const isFAQComponent = story.name === "faq";
   const schema = getSchemaForStory(story);
 
-  // story.content.body.map((item) => {
-  //   item?.reviews?.map((review) => {
-  //     console.log("review", review);
-  //   });
-  // })
-
-  const dynamicReviews = story?.content?.body.map((item) => {
-    return item?.reviews?.map((review) => ({
-      author: review.name,
-      datePublished: review.published_at || "Unknown Date", // Make sure to provide a valid date or a placeholder
-      name: `Review by ${review.name}`,
-      reviewBody: review.description?.content?.map((contentItem) => contentItem.text).join(" ") || "No review content provided", // Extract text from rich text object if available
-      reviewRating: {
-        ratingValue: review.rating,
-        bestRating: "5",
-        worstRating: "1",
-      },
-    })) || [];
-  });
-
+  // Check if story.content.body exists and is an array, then proceed with mapping
+  const dynamicReviews =
+    story?.content?.body && Array.isArray(story.content.body)
+      ? story.content.body.flatMap((item) => {
+          return (
+            item?.reviews?.map((review) => ({
+              author: review.name,
+              datePublished: review.published_at || "Unknown Date", // Make sure to provide a valid date or a placeholder
+              name: `Review by ${review.name}`,
+              reviewBody:
+                review.description?.content
+                  ?.map((contentItem) => contentItem.text)
+                  .join(" ") || "No review content provided", // Extract text from rich text object if available
+              reviewRating: {
+                ratingValue: review.rating,
+                bestRating: "5",
+                worstRating: "1",
+              },
+            })) || []
+          );
+        })
+      : [];
 
   return (
     <>
@@ -178,7 +180,7 @@ export default async function Page({ params }) {
           logo="https://localleads247.vercel.app/img/local-leads-logo.svg"
           url="https://localleads247.vercel.app/"
         />
-         <LocalBusinessJsonLd
+        <LocalBusinessJsonLd
           useAppDir={true}
           id="https://localleads247.vercel.app/"
           name="Local Leads 247"
@@ -217,7 +219,7 @@ export default async function Page({ params }) {
         {schema.type === "WebPage" && (
           <WebPageJsonLd useAppDir={true} {...schema} />
         )}
-       
+
         <StoryblokStory story={story} full_slug={story?.full_slug} />
       </div>
     </>
