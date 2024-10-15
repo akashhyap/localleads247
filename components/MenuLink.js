@@ -17,7 +17,7 @@ const MenuLink = ({ blok, closeMenu }) => {
     return null; // or a loading placeholder if preferred
   }
   const hasSubMenu = blok?.menu?.length != 0;
-
+  // console.log("menu link", blok?.menu?.length);
   return (
     <>
       {hasSubMenu ? (
@@ -43,14 +43,14 @@ const MenuLink = ({ blok, closeMenu }) => {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="origin-top-right absolute right-0 mt-4 w-64 rounded-md shadow-lg bg-[#35384b] ring-1 ring-black ring-opacity-5">
-                    <div className="p-4 flex flex-col gap-y-2">
+                  <Menu.Items className={`origin-top-right absolute left-0 mt-4 ${blok?.menu?.length > 5 ? 'w-[500px]' : 'w-64' } rounded-lg shadow-lg bg-[#35384b] ring-1 ring-black ring-opacity-5`}>
+                    <div className={`px-5 py-6 grid ${blok?.menu?.length > 5 ? "md:grid-cols-2 gap-4" : "grid-cols-1"} gap-y-4`}>
                       {blok?.menu?.map((subItem, index) => (
                         <Menu.Item key={`${subItem._uid}-${index}`}>
                           {({ active }) => (
                             <Link
                               href={`/${subItem.link.cached_url}`}
-                              className="drop_link mb-4 md:mb-0 text-white hover:text-gray-200 text-[15px]"
+                              className="drop_link"
                               aria-label="menu link"
                             >
                               {subItem.name}
@@ -67,7 +67,7 @@ const MenuLink = ({ blok, closeMenu }) => {
           <Popover key={blok._uid} className="md:mt-4 md:hidden">
             {({ open }) => (
               <>
-                <Popover.Button className="flex justify-between text-base leading-snug items-center w-full md:py-2 mb-2 md:mb-0 text-black hover:text-gray-900">
+                <Popover.Button className="flex justify-between text-base leading-snug items-center w-full md:py-2 mb-4 md:mb-0 text-black hover:text-gray-900">
                   {blok.name}
                   <span>
                     {open ? (

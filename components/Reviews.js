@@ -45,7 +45,8 @@ export default function Reviews({ blok }) {
   return (
     <div className="review mb-5">
       <div className="review_name [&>p]:text-[#fff] font-semibold">
-        {render(blok?.name)}
+        <h3>{blok?.name}</h3>
+        <p>{blok?.location}</p>
       </div>
       <div className="rating my-3"> {renderStars(blok?.rating)} </div>
       <div

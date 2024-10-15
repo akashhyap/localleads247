@@ -6,6 +6,7 @@ import {
   FAQPageJsonLd,
   LogoJsonLd,
   WebPageJsonLd,
+  LocalBusinessJsonLd,
 } from "next-seo";
 import { storyblokEditable } from "@storyblok/react";
 
@@ -21,7 +22,7 @@ async function fetchData(params) {
 }
 
 function getSchemaForStory(story) {
-  const baseUrl = "https://localhosts:3010";
+  const baseUrl = "https://localleads247.vercel.app/";
 
   switch (story?.content.component) {
     case "blog":
@@ -131,42 +132,42 @@ function getSchemaForStory(story) {
       if (story.content && Array.isArray(story.content.body)) {
         schema.hasPart = story.content.body.map((component) => ({
           "@type": "WebPageElement",
-          name: component.component,
-          description: getComponentDescription(component),
+          name: component?.section_name,
+          description: component?.section_description,
         }));
       }
       return schema;
   }
 }
 
-function getComponentDescription(component) {
-  switch (component.component) {
-    case "container":
-      return `Container with ${component.content?.length || 0} elements`;
-    case "home_service_lead":
-      return (
-        component.title_label?.content?.[0]?.content?.[0]?.text ||
-        "Home service lead section"
-      );
-    case "HorizontalScroller":
-      return `Horizontal scroller with ${component.content?.length || 0} items`;
-    case "sticky_content":
-      return component.badge || "Sticky content section";
-    case "review_section":
-      return `Review section with ${component.reviews?.length || 0} reviews`;
-    default:
-      return `${component.component} section`;
-  }
-}
-
 export default async function Page({ params }) {
   const { story } = await fetchData(params);
-
+  // console.log("story", story.content.body.map((item) => item.section_description));
   // const isBlogPage = story.content.component === "blog";
+  const isReviewSection = story.content.component === "review_section";
   const isFAQComponent = story.name === "faq";
   const schema = getSchemaForStory(story);
 
-  // console.log("story", story.content);
+  // story.content.body.map((item) => {
+  //   item?.reviews?.map((review) => {
+  //     console.log("review", review);
+  //   });
+  // })
+
+  const dynamicReviews = story.content.body.flatMap((item) => {
+    return item?.reviews?.map((review) => ({
+      author: review.name,
+      datePublished: review.published_at || "Unknown Date", // Make sure to provide a valid date or a placeholder
+      name: `Review by ${review.name}`,
+      reviewBody: review.description?.content?.map((contentItem) => contentItem.text).join(" ") || "No review content provided", // Extract text from rich text object if available
+      reviewRating: {
+        ratingValue: review.rating,
+        bestRating: "5",
+        worstRating: "1",
+      },
+    })) || [];
+  });
+
 
   return (
     <>
@@ -174,8 +175,30 @@ export default async function Page({ params }) {
         {/* <WebPageJsonLd useAppDir={true} {...schema} /> */}
         <LogoJsonLd
           useAppDir={true}
-          logo="https://localhost:3010/img/local-leads-logo.svg"
-          url="https://localhost:3010"
+          logo="https://localleads247.vercel.app/img/local-leads-logo.svg"
+          url="https://localleads247.vercel.app/"
+        />
+         <LocalBusinessJsonLd
+          useAppDir={true}
+          id="https://localleads247.vercel.app/"
+          name="Local Leads 247"
+          telephone="+14088717984"
+          address={{
+            streetAddress: "1600 Saratoga Ave",
+            addressLocality: "San Jose",
+            addressRegion: "CA",
+            postalCode: "95129",
+            addressCountry: "US",
+          }}
+          geo={{
+            latitude: "37.293058",
+            longitude: "-121.988331",
+          }}
+          rating={{
+            ratingValue: "4.9",
+            ratingCount: "100",
+          }}
+          review={dynamicReviews}
         />
         {isFAQComponent && (
           <FAQPageJsonLd
@@ -194,6 +217,7 @@ export default async function Page({ params }) {
         {schema.type === "WebPage" && (
           <WebPageJsonLd useAppDir={true} {...schema} />
         )}
+       
         <StoryblokStory story={story} full_slug={story?.full_slug} />
       </div>
     </>

@@ -1156,7 +1156,7 @@ i.icon-none {
 }
 
 .review_name h3 {
-  @apply text-xl;
+  @apply text-xl text-[#38b6ff];
 }
 .review_name p,
 .review_description p {
@@ -1211,12 +1211,12 @@ i.icon-none {
 }
 
 .drop_link {
-  border-bottom: 1px solid #7c7c7c75;
-  padding-bottom: 9px;
+  @apply text-white hover:text-gray-200 text-[15px] border-b border-[#7c7c7c75] pb-4 leading-relaxed
 }
 
 .drop_link:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 @media (max-width: 767px) {
   .right_menu {
