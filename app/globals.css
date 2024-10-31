@@ -434,13 +434,17 @@ h6 {
   @apply px-4 py-2;
 }
 
+.banner1_btn_solid_big {
+  @apply font-instrument-bold;
+  padding: 25px 40px 20px;
+}
+
 @media (min-width: 1024px) {
   .banner1_btn_solid {
     font-size: 1.38rem;
   }
   .banner1_btn_solid_big {
-    @apply font-instrument-bold text-[29px];
-    padding: 25px 40px 20px;
+    @apply text-[29px];
   }
 }
 
