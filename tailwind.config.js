@@ -43,6 +43,7 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-poppins)"],
         mono: ["var(--font-roboto)"],
+        instrument: ["instrument-sans-variable"]
       },
       keyframes: {
         "scroll-left": {

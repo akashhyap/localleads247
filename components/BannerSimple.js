@@ -55,7 +55,7 @@ const BannerSimple = ({ blok }) => {
           {blok?.button1_label && blok?.button1_link?.cached_url ? (
             <Link
               href={blok.button1_link}
-              className="md:flex md:items-center bttn banner1_btn_solid"
+              className="md:flex md:items-center bttn banner1_btn_solid banner1_btn_solid_big"
               style={{
                 backgroundColor: blok?.button1_bg,
                 color: blok?.button1_text,

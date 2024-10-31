@@ -62,7 +62,7 @@ const StickyContent = ({ blok }) => {
             {blok?.button_label && blok?.button_link?.cached_url ? (
               <Link
                 href={`/${blok.button_link.cached_url || ""}`}
-                className="primary_btn primary_btn--big"
+                className="primary_btn banner1_btn_solid_big"
               >
                 {blok.button_label || "Default Label"}
               </Link>
