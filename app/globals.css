@@ -436,7 +436,8 @@ h6 {
 
 .banner1_btn_solid_big {
   @apply font-instrument-bold;
-  padding: 25px 40px 20px;
+  padding: 20px 22px 15px;
+  font-size: 21px;
 }
 
 @media (min-width: 1024px) {
