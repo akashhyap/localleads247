@@ -446,6 +446,7 @@ h6 {
   }
   .banner1_btn_solid_big {
     @apply text-[29px];
+    padding: 25px 40px 20px;
   }
 }
 
