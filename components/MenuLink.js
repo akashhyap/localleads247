@@ -64,10 +64,10 @@ const MenuLink = ({ blok, closeMenu }) => {
               </>
             )}
           </Menu>
-          <Popover key={blok._uid} className="md:mt-4 md:hidden">
+          <Popover key={blok._uid} className="mb-3 md:mb-0 md:hidden">
             {({ open }) => (
               <>
-                <Popover.Button className="flex justify-between text-base leading-snug items-center w-full md:py-2 mb-4 md:mb-0 text-black hover:text-gray-900">
+                <Popover.Button className="flex justify-between text-base leading-snug items-center w-full text-black hover:text-gray-900">
                   {blok.name}
                   <span>
                     {open ? (
@@ -108,7 +108,7 @@ const MenuLink = ({ blok, closeMenu }) => {
           </Popover>
         </>
       ) : (
-        <div className="relative text-left z-10 mb-0">
+        <div className="relative flex text-left z-10 mb-3 md:mb-0">
           {blok?.link.cached_url !== "search" ? (
             blok?.isButton ? (
               <Link

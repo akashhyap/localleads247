@@ -117,9 +117,10 @@ h6 {
     max-width: calc(var(--container-width) - var(--container-padding) * 2);
   }
 }
-@media (min-width: 1280px) {
+@media (min-width: 1600px) {
   .header_outer {
     width: calc(100% - var(--container-padding) * 2);
+   
   }
 }
 
@@ -361,6 +362,12 @@ h6 {
 /* Base style for menu links */
 .menulinks {
   @apply relative rounded-full overflow-hidden;
+}
+
+@media (min-width:991px) and (max-width: 1599px) {
+  .menulinks {
+    font-size: 15px;
+  }
 }
 
 /* Media query for larger screens */

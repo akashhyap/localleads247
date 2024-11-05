@@ -42,7 +42,7 @@ const Config = ({ blok }) => {
     <>
       {blok?.content && (
         <div
-          className={`top_header text-center text-[17px]`}
+          className="top_header text-center text-[17px] px-4 xl:px-0 lg:py-2 leading-snug"
           style={{
             paddingTop: blok?.padding_top,
             paddingBottom: blok.paddingBottom,
@@ -55,7 +55,7 @@ const Config = ({ blok }) => {
         </div>
       )}
       <div
-        className={`header_outer ${headerStyle} header-transition py-3 px-4 sm:px-6 xl:px-8 rounded-lg z-50`}
+        className={`header_outer ${headerStyle} header-transition py-3 px-4 sm:px-6 2xl:px-4 rounded-lg z-50`}
       >
         <div className="flex items-center justify-between">
           {/* Site Logo */}
@@ -66,7 +66,7 @@ const Config = ({ blok }) => {
                 <Image
                   src={blok?.logo?.filename}
                   alt="logo"
-                  width={250}
+                  width={220}
                   height={150}
                   className="object-contain object-center"
                   priority
