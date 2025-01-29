@@ -6,12 +6,13 @@ import Link from "next/link";
 import Image from "next/image";
 import Lottie from "lottie-react";
 import animationData from "../animation/lottie.json";
+
 const StickyContent = ({ blok }) => {
   const HeadingTag = blok?.title_tag || "p";
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-    if (blok.title_label) {
+    if (typeof document !== 'undefined' && blok.title_label) {
       setContent(render(blok.title_label));
     }
   }, [blok.title_label]);

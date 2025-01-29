@@ -216,7 +216,7 @@ h6 {
 }
 
 .content_block {
-  @apply [&>h2]:pt-4 [&>p>img]:rounded-2xl [&>p]:text-lg [&>p]:py-4 [&>p]:leading-8 [&>ul]:mb-8 [&>ul]:list-disc [&>ul]:pl-4 [&>ul>li]:leading-8 [&>ul>li]:mb-4 [&>ol]:list-decimal [&>ol]:pl-4 [&>ol>li]:leading-8 [&>ol>li]:mb-4 mb-10 px-7;
+  @apply [&>h2]:pt-4 [&>h3]:mb-6 [&>p>img]:rounded-2xl [&>p]:text-lg [&>p]:mb-8 [&>p]:leading-8 [&>ul]:mb-8 [&>ul]:list-disc [&>ul]:pl-4 [&>ul>li]:leading-8 [&>ul>li]:mb-4 [&>ol]:list-decimal [&>ol]:pl-4 [&>ol]:mb-8 [&>ol>li]:leading-8 [&>ol>li]:mb-4 mb-10 px-7;
 }
 
 .image_text_split .content_block {

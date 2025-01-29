@@ -1,6 +1,7 @@
 /** 1. Tag it as client component */
 "use client";
 import { storyblokInit, apiPlugin } from "@storyblok/react/rsc";
+import dynamic from 'next/dynamic'
 
 /** 2. Import your components */
 import Config from "./Config";
@@ -10,7 +11,7 @@ import Container from "./Container";
 import Heading from "./Heading";
 import Content from "./Content";
 import BannerSimple from "./BannerSimple";
-import StickyContent from "./StickyContent";
+
 import ListContent from "./ListContent";
 import HorizontalScroller from "./HorizontalScroller";
 import BrandList from "./BrandList";
@@ -31,6 +32,9 @@ import Footer_1 from "./Footer_1";
 import FooterColumn from "./FooterColumn";
 import Contact from "./Contact";
 import Images from "./Images";
+import Pricing from "./Pricing";
+import PriceCategory from "./PriceCategory";
+import PriceLevel from "./PriceLevel";
 // import HtmlElements from "./HtmlElements";
 // import TitleH1 from "./TitleH1";
 // import Insights from "./Insights";
@@ -57,6 +61,12 @@ import Images from "./Images";
 // import BigDogs from "./BigDogs";
 // import Products from "./Products";
 // import SearchBar from "./SearchBar";
+
+
+// Dynamic import for StickyContent with ssr disabled
+const StickyContent = dynamic(() => import('./StickyContent'), {
+  ssr: false
+})
 
 /** 3. Initialize it as usual */
 storyblokInit({
@@ -91,6 +101,9 @@ storyblokInit({
     footer_column: FooterColumn,
     contact_us: Contact,
     images: Images,
+    pricing: Pricing,
+    priceCategory: PriceCategory,
+    priceLevel: PriceLevel,
     // h1_title: TitleH1,
     // insights: Insights,
     // insightsCard: InsightsCard,
