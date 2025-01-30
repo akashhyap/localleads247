@@ -1164,10 +1164,6 @@ i.icon-none {
   .banner_simple_intro h1 {
     line-height: 60px;
   }
-  .banner_simple_intro h1 i::after {
-    height: 17px;
-    bottom: -8px;
-  }
 }
 
 @media (min-width: 1366px) {
@@ -1208,7 +1204,7 @@ i.icon-none {
 @media (min-width: 768px) and (max-width: 1023px) {
   .banner_simple_intro h1 i::after {
     height: 25px;
-    bottom: -26px;
+    bottom: -14px;
   }
 }
 

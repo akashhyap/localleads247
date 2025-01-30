@@ -25,7 +25,7 @@ const MenuLink = ({ blok, closeMenu }) => {
           <Menu
             as="div"
             key={`${blok?._uid}-i`}
-            className="relative text-left hidden md:inline-block mb-4 md:mb-0 z-10"
+            className="relative text-left hidden xl:inline-block mb-4 xl:mb-0 z-10"
           >
             {({ open }) => (
               <>
@@ -44,7 +44,7 @@ const MenuLink = ({ blok, closeMenu }) => {
                   leaveTo="transform opacity-0 scale-95"
                 >
                   <Menu.Items className={`origin-top-right absolute left-0 mt-4 ${blok?.menu?.length > 5 ? 'w-[500px]' : 'w-64' } rounded-lg shadow-lg bg-[#35384b] ring-1 ring-black ring-opacity-5`}>
-                    <div className={`px-5 py-6 grid ${blok?.menu?.length > 5 ? "md:grid-cols-2 gap-4" : "grid-cols-1"} gap-y-4`}>
+                    <div className={`px-5 py-6 grid ${blok?.menu?.length > 5 ? "xl:grid-cols-2 gap-4" : "grid-cols-1"} gap-y-4`}>
                       {blok?.menu?.map((subItem, index) => (
                         <Menu.Item key={`${subItem._uid}-${index}`}>
                           {({ active }) => (
@@ -64,7 +64,7 @@ const MenuLink = ({ blok, closeMenu }) => {
               </>
             )}
           </Menu>
-          <Popover key={blok._uid} className="mb-3 md:mb-0 md:hidden">
+          <Popover key={blok._uid} className="mb-3 xl:mb-0 xl:hidden">
             {({ open }) => (
               <>
                 <Popover.Button className="flex justify-between text-base leading-snug items-center w-full text-black hover:text-gray-900">
@@ -94,7 +94,7 @@ const MenuLink = ({ blok, closeMenu }) => {
                       <Link
                         key={subItem._uid}
                         href={`/${subItem.link.cached_url}`}
-                        className="drop_link mb-2 md:mb-0 text-white hover:text-gray-200 text-[15px]"
+                        className="drop_link mb-2 xl:mb-0 text-white hover:text-gray-200 text-[15px]"
                         onClick={closeMenu}
                         aria-label="menu link"
                       >
@@ -108,7 +108,7 @@ const MenuLink = ({ blok, closeMenu }) => {
           </Popover>
         </>
       ) : (
-        <div className="relative flex text-left z-10 mb-3 md:mb-0">
+        <div className="relative flex text-left z-10 mb-3 xl:mb-0">
           {blok?.link.cached_url !== "search" ? (
             blok?.isButton ? (
               <Link

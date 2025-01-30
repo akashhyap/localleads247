@@ -9,6 +9,7 @@ import { IoIosStar } from "react-icons/io";
 import { GoArrowRight } from "react-icons/go";
 
 const BannerSimple = ({ blok }) => {
+  // console.log("banner simple", blok);
   const renderStars = (rating) => {
     // Set default rating to 5 if no value is provided
     const validRating = rating;
@@ -54,7 +55,7 @@ const BannerSimple = ({ blok }) => {
         >
           {blok?.button1_label && blok?.button1_link?.cached_url ? (
             <Link
-              href={blok.button1_link}
+              href={blok.button1_link.cached_url}
               className="md:flex md:items-center bttn banner1_btn_solid banner1_btn_solid_big"
               style={{
                 backgroundColor: blok?.button1_bg,
@@ -75,7 +76,7 @@ const BannerSimple = ({ blok }) => {
           ) : null}
           {blok?.button2_label && blok?.button2_link?.cached_url ? (
             <Link
-              href={blok.button2_link}
+              href={blok.button2_link.cached_url}
               className="bttn banner1_btn_transparent inline-flex transition duration-300"
               style={{
                 backgroundColor: blok?.button2_bg,

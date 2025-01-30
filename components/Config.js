@@ -78,7 +78,7 @@ const Config = ({ blok }) => {
           <div className="flex -mr-2 -my-2 order-3">
             <button
               type="button"
-              className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-black hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+              className="xl:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-black hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <span className="sr-only">Open menu</span>
@@ -101,8 +101,8 @@ const Config = ({ blok }) => {
             </button>
           </div>
           {/* Menu items */}
-          <nav className="font-sans font-normal text-base leading-snug hidden md:flex md:flex-1 md:justify-between md:items-center ml-0 md:ml-10">
-            <div className="left_menu flex gap-3 md:items-center">
+          <nav className="font-sans font-normal text-base leading-snug hidden xl:flex xl:flex-1 xl:justify-between xl:items-center ml-0 xl:ml-10">
+            <div className="left_menu flex gap-3 xl:items-center">
               {blok?.header_menu?.map((nestedBlok) => (
                 <StoryblokComponent
                   blok={nestedBlok}
