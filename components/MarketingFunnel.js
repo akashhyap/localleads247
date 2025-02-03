@@ -1,67 +1,379 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { motion, AnimatePresence } from "framer-motion";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const totalSteps = 15;
 
+// Validation schema
+const funnelSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email"),
+  sell_type: z.string().min(1, "Please select your service type"),
+  marketing_facebook: z.boolean().optional(),
+  marketing_adwords: z.boolean().optional(),
+  marketing_seo: z.boolean().optional(),
+  marketing_tv: z.boolean().optional(),
+  marketing_radio: z.boolean().optional(),
+  marketing_print: z.boolean().optional(),
+  marketing_other: z.boolean().optional(),
+  marketing_none: z.boolean().optional(),
+  country: z.string().min(1, "Please select your country"),
+  monthly_budget: z.string().min(1, "Please select your budget range"),
+  website_url: z.string().optional(),
+  noWebsite: z.boolean().optional(),
+  business_description: z.string().min(10, "Please provide more details about your business"),
+  current_revenue: z.string().min(1, "Please enter your current revenue"),
+  target_revenue: z.string().min(1, "Please enter your target revenue"),
+  revenue_obstacle: z.string().optional(),
+  start_time: z.string().min(1, "Please select when you want to start"),
+  interest_level: z.string().min(1, "Please select your interest level"),
+  investment_willingness: z.string().optional(),
+  final_name: z.string().min(2, "Name must be at least 2 characters"),
+}).refine(
+  (data) => {
+    // Website validation
+    if (!data.website_url && !data.noWebsite) {
+      return false;
+    }
+    return true;
+  },
+  {
+    message: "Please enter your website URL or check 'I don't have a website'",
+    path: ["website_url"],
+  }
+).refine(
+  (data) => {
+    // Marketing channels validation
+    const marketingChannels = [
+      'marketing_facebook',
+      'marketing_adwords',
+      'marketing_seo',
+      'marketing_tv',
+      'marketing_radio',
+      'marketing_print',
+      'marketing_other',
+      'marketing_none'
+    ];
+    return marketingChannels.some(channel => data[channel]);
+  },
+  {
+    message: "Please select at least one marketing channel",
+    path: ["marketing_facebook"],
+  }
+);
+
 const MarketingFunnel = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [userName, setUserName] = useState("");
-  const [formData, setFormData] = useState({
-    currentRevenue: 33000,
-    targetRevenue: 100000,
-    websiteUrl: "",
-    noWebsite: false,
+  const [formState, setFormState] = useState({
+    isSubmitted: false,
+    isLoading: false,
+    error: null
   });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, dirtyFields },
+    reset,
+    watch,
+    setValue,
+    setError,
+    clearErrors,
+    getValues
+  } = useForm({
+    resolver: zodResolver(funnelSchema),
+    mode: "onChange",
+    defaultValues: {
+      currentRevenue: 33000,
+      targetRevenue: 100000,
+      websiteUrl: "",
+      noWebsite: false,
+      email: "",
+      start_time: "Immediately",
+      interest_level: "5"
+    }
+  });
+
+  useEffect(() => {
+    // Set initial value for start_time
+    setValue("start_time", "Immediately");
+  }, [setValue]);
+
+  useEffect(() => {
+    console.log("Form errors:", errors);
+    console.log("Form is valid:", isValid);
+  }, [errors, isValid]);
 
   const updateUserNameDisplay = useCallback(() => {
     const nameDisplayElements = document.querySelectorAll(".userNameDisplay");
     nameDisplayElements.forEach((element) => {
-      element.textContent = userName;
+      element.textContent = watch("name") || "";
     });
-  }, [userName]);
+  }, [watch]);
 
   useEffect(() => {
-    updateProgressBar(currentStep);
     updateUserNameDisplay();
-  }, [currentStep, userName, updateUserNameDisplay]);
+  }, [updateUserNameDisplay]);
 
-  const updateProgressBar = (stepNumber) => {
-    const progressSteps = document.querySelectorAll(".progress-step");
-    const progressLines = document.querySelectorAll(".progress-line");
+  const [validationError, setValidationError] = useState("");
 
-    progressSteps.forEach((step, index) => {
-      step.classList.toggle("completed", index + 1 <= stepNumber);
-    });
-
-    progressLines.forEach((line, index) => {
-      line.classList.toggle("active", index < stepNumber - 1);
-    });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    if (type === "checkbox") {
-      setFormData({ ...formData, [name]: checked });
-    } else {
-      setFormData({ ...formData, [name]: value });
+  const handleNextStep = async () => {
+    // Skip validation for the first step (welcome screen)
+    if (currentStep === 1) {
+      setCurrentStep(prev => prev + 1);
+      return;
     }
-  };
 
-  const handleNextStep = () => {
-    if (currentStep === 2) {
-      setUserName(formData.name || "");
+    // Get the fields that need to be validated for the current step
+    const currentFields = getFieldsForStep(currentStep);
+    
+    // If there are fields to validate
+    if (currentFields.length > 0) {
+      const currentValues = getValues();
+      let hasErrors = false;
+
+      // Check each field
+      for (const field of currentFields) {
+        if (!currentValues[field] || currentValues[field].toString().trim() === '') {
+          setError(field, {
+            type: 'required',
+            message: `This field is required`
+          });
+          hasErrors = true;
+        }
+      }
+
+      if (hasErrors) {
+        setValidationError("Please fill in all required fields");
+        return;
+      }
     }
-    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+
+    // Special validation for marketing channels step
+    if (currentStep === 4) {
+      const marketingChannels = [
+        'marketing_facebook',
+        'marketing_adwords',
+        'marketing_seo',
+        'marketing_tv',
+        'marketing_radio',
+        'marketing_print',
+        'marketing_other',
+        'marketing_none'
+      ];
+
+      const hasSelectedChannel = marketingChannels.some(channel => getValues()[channel]);
+
+      if (!hasSelectedChannel) {
+        setValidationError("Please select at least one marketing channel");
+        return;
+      }
+      setValidationError("");
+    }
+
+    // Special validation for website step
+    if (currentStep === 7) {
+      const values = getValues();
+      const hasWebsite = values.website_url && values.website_url.trim() !== "";
+      const hasNoWebsiteChecked = values.noWebsite === true;
+
+      if (!hasWebsite && !hasNoWebsiteChecked) {
+        setError('website_url', {
+          type: 'manual',
+          message: "Please enter your website URL or check 'I don't have a website'"
+        });
+        setValidationError("Please enter your website URL or check 'I don't have a website'");
+        return;
+      }
+      clearErrors('website_url');
+      setValidationError("");
+    }
+
+    // Clear any previous validation errors
+    setValidationError("");
+    
+    // If all validations pass, proceed to next step
+    setCurrentStep(prev => prev + 1);
   };
 
   const handlePrevStep = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
+    setValidationError(""); // Clear any validation errors when going back
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Form submission logic here
-    alert("Form submitted!");
+  const handleRestart = () => {
+    setFormState({
+      isSubmitted: false,
+      isLoading: false,
+      error: null
+    });
+    reset();
+    setCurrentStep(1);
   };
+
+  const formatFunnelData = (data) => {
+    const marketingChannels = Object.entries(data)
+      .filter(([key, value]) => key.startsWith('marketing_') && value)
+      .map(([key]) => `- ${key.replace('marketing_', '').toUpperCase()}`)
+      .join('\n');
+
+    return {
+      name: data.final_name || data.name,
+      email: data.email,
+      message: `
+Business Information:
+- Name: ${data.final_name || data.name}
+- Service Type: ${data.sell_type || 'Not specified'}
+- Country: ${data.country || 'Not specified'}
+- Website: ${data.noWebsite ? 'No website' : (data.website_url || 'Not provided')}
+
+Financial Information:
+- Current Revenue: $${(data.current_revenue || 0).toLocaleString()}
+- Target Revenue: $${(data.target_revenue || 0).toLocaleString()}
+- Monthly Marketing Budget: ${data.monthly_budget || 'Not specified'}
+
+Marketing Channels:
+${marketingChannels || 'None selected'}
+
+Additional Information:
+- Business Description: ${data.business_description || 'Not provided'}
+- Main Revenue Obstacle: ${data.revenue_obstacle || 'Not provided'}
+- Start Timeline: ${data.start_time || 'Not specified'}
+- Interest Level (1-10): ${data.interest_level || 'Not specified'}
+- Investment Willingness: ${data.investment_willingness || 'Not specified'}
+      `.trim()
+    };
+  };
+
+  const onSubmit = async (data) => {
+    console.log("Form submission started", { data });
+    setFormState({ ...formState, isLoading: true, error: null });
+    try {
+      const { sendEmail } = await import("@/utils/send-email");
+      const formattedData = formatFunnelData(data);
+      console.log("Formatted data:", formattedData);
+      
+      // Add retry logic for network issues
+      let retries = 3;
+      let response;
+      
+      while (retries > 0) {
+        try {
+          response = await sendEmail({
+            name: formattedData.name,
+            email: formattedData.email,
+            message: formattedData.message
+          });
+          break;
+        } catch (error) {
+          if (retries === 1) throw error;
+          retries--;
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+      }
+      
+      if (response && response.message) {
+        setFormState({
+          isSubmitted: true,
+          isLoading: false,
+          error: null
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      const errorMessage = error.response?.data?.error || 
+        "An error occurred while submitting your information. Please try again.";
+      
+      setFormState({
+        isSubmitted: false,
+        isLoading: false,
+        error: errorMessage
+      });
+    }
+  };
+
+  // Helper function to get fields for current step
+  const getFieldsForStep = (step) => {
+    switch (step) {
+      case 2:
+        return ['name'];
+      case 3:
+        return ['sell_type'];
+      case 4:
+        return [];  // Skip validation for marketing step
+      case 5:
+        return ['country'];
+      case 6:
+        return ['monthly_budget'];
+      case 7:
+        return ['website_url'];
+      case 8:
+        return ['business_description'];
+      case 9:
+        return ['current_revenue'];
+      case 10:
+        return ['target_revenue'];
+      case 11:
+        return ['revenue_obstacle'];
+      case 12:
+        return ['start_time'];
+      case 13:
+        return ['interest_level'];
+      case 14:
+        return ['investment_willingness'];
+      case 15:
+        return ['final_name', 'email'];
+      default:
+        return [];
+    }
+  };
+
+  if (formState.isSubmitted) {
+    return (
+      <div className="success-container flex flex-col items-center justify-center min-h-[400px] text-center">
+        <motion.div 
+          className="success-check text-6xl text-green-500 mb-6"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 200 }}
+        >
+          ✓
+        </motion.div>
+        
+        <motion.h3
+          className="text-2xl font-bold mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          Thank You for Your Interest!
+        </motion.h3>
+        
+        <motion.p
+          className="text-gray-600 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          We've received your information and will be in touch soon.
+        </motion.p>
+        
+        <motion.button 
+          onClick={handleRestart}
+          className="restart-btn bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors duration-200"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Start New Application
+        </motion.button>
+      </div>
+    );
+  }
 
   return (
     <div className="funnel_container">
@@ -78,7 +390,7 @@ const MarketingFunnel = () => {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {currentStep === 1 && (
           <div className="step">
             <h3 className="step_heading">
@@ -104,11 +416,24 @@ const MarketingFunnel = () => {
             <h3>What&apos;s your name?</h3>
             <input
               type="text"
-              name="name"
-              value={formData.name || ""}
-              onChange={handleInputChange}
-              required
+              {...register("name")}
+              className={`w-full p-3 border rounded-lg transition-all duration-200 ${
+                errors.name ? 'border-red-500 shake' : 
+                dirtyFields.name ? 'border-green-500' : 'border-gray-300'
+              }`}
             />
+            <AnimatePresence>
+              {errors.name && (
+                <motion.p
+                  className="text-red-500 text-sm mt-1"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  {errors.name.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
             <div className="cta-direction">
               <button
                 type="button"
@@ -132,7 +457,7 @@ const MarketingFunnel = () => {
           <div className="step">
             <p className="light_text">
               Awesome, thanks{" "}
-              <span className="userNameDisplay">{userName}</span>! 👍 Now,
+              <span className="userNameDisplay">{watch("name")}</span>! 👍 Now,
               let&apos;s see if we&apos;re the perfect match to skyrocket your
               business. 🚀💼 We&apos;ve got a quick quiz to make sure we can
               serve up that secret sauce for your success. Ready to dive in?
@@ -141,11 +466,12 @@ const MarketingFunnel = () => {
             <h3>What type of home-based service do you offer?</h3>
 
             <select
-              className="light_text text-left"
-              name="sell_type"
-              value={formData.sell_type || ""}
-              onChange={handleInputChange}
-              required
+              // className="light_text text-left"
+              {...register("sell_type")}
+              className={`w-full p-3 border rounded-lg transition-all duration-200 ${
+                errors.sell_type ? 'border-red-500 shake' : 
+                dirtyFields.sell_type ? 'border-green-500' : 'border-gray-300'
+              }`}
             >
               <option value="">
                 🏠 Choose the option that best describes your business:
@@ -160,6 +486,19 @@ const MarketingFunnel = () => {
                 Other Home-Based Service (please specify)
               </option>
             </select>
+
+            <AnimatePresence>
+              {errors.sell_type && (
+                <motion.p
+                  className="text-red-500 text-sm mt-1"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  {errors.sell_type.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
 
             <div className="cta-direction">
               <button
@@ -187,14 +526,13 @@ const MarketingFunnel = () => {
               currently using to attract local customers?
             </h3>
             <p className="light_text">Check all that apply</p>
+
             <div className="m_types_container icons">
               <div className="infusion-checkbox">
                 <input
                   id="inf_option_FacebookAds"
-                  name="marketing_facebook"
                   type="checkbox"
-                  checked={formData.marketing_facebook || false}
-                  onChange={handleInputChange}
+                  {...register("marketing_facebook")}
                 />
                 <label
                   className="infusion-field-label-container infusion-label-checkbox"
@@ -204,13 +542,12 @@ const MarketingFunnel = () => {
                   <span>Facebook Ads</span>
                 </label>
               </div>
+
               <div className="infusion-checkbox">
                 <input
                   id="inf_option_GoogleAdwords"
-                  name="marketing_adwords"
                   type="checkbox"
-                  checked={formData.marketing_adwords || false}
-                  onChange={handleInputChange}
+                  {...register("marketing_adwords")}
                 />
                 <label
                   className="infusion-field-label-container infusion-label-checkbox"
@@ -220,13 +557,12 @@ const MarketingFunnel = () => {
                   <span>Google Adwords</span>
                 </label>
               </div>
+
               <div className="infusion-checkbox">
                 <input
                   id="inf_option_SEO"
-                  name="marketing_seo"
                   type="checkbox"
-                  checked={formData.marketing_seo || false}
-                  onChange={handleInputChange}
+                  {...register("marketing_seo")}
                 />
                 <label
                   className="infusion-field-label-container infusion-label-checkbox"
@@ -236,13 +572,12 @@ const MarketingFunnel = () => {
                   <span>SEO</span>
                 </label>
               </div>
+
               <div className="infusion-checkbox">
                 <input
                   id="inf_option_Television"
-                  name="marketing_tv"
                   type="checkbox"
-                  checked={formData.marketing_tv || false}
-                  onChange={handleInputChange}
+                  {...register("marketing_tv")}
                 />
                 <label
                   className="infusion-field-label-container infusion-label-checkbox"
@@ -252,13 +587,12 @@ const MarketingFunnel = () => {
                   <span>Television</span>
                 </label>
               </div>
+
               <div className="infusion-checkbox">
                 <input
                   id="inf_option_Radio"
-                  name="marketing_radio"
                   type="checkbox"
-                  checked={formData.marketing_radio || false}
-                  onChange={handleInputChange}
+                  {...register("marketing_radio")}
                 />
                 <label
                   className="infusion-field-label-container infusion-label-checkbox"
@@ -268,13 +602,12 @@ const MarketingFunnel = () => {
                   <span>Radio</span>
                 </label>
               </div>
+
               <div className="infusion-checkbox">
                 <input
                   id="inf_option_NewspaperPrint"
-                  name="marketing_print"
                   type="checkbox"
-                  checked={formData.marketing_print || false}
-                  onChange={handleInputChange}
+                  {...register("marketing_print")}
                 />
                 <label
                   className="infusion-field-label-container infusion-label-checkbox"
@@ -284,13 +617,12 @@ const MarketingFunnel = () => {
                   <span>Newspaper / Print</span>
                 </label>
               </div>
+
               <div className="infusion-checkbox">
                 <input
                   id="inf_option_Other"
-                  name="marketing_other"
                   type="checkbox"
-                  checked={formData.marketing_other || false}
-                  onChange={handleInputChange}
+                  {...register("marketing_other")}
                 />
                 <label
                   className="infusion-field-label-container infusion-label-checkbox"
@@ -300,13 +632,26 @@ const MarketingFunnel = () => {
                   <span>Others</span>
                 </label>
               </div>
+
               <div className="infusion-checkbox">
                 <input
                   id="inf_option_None"
-                  name="marketing_none"
                   type="checkbox"
-                  checked={formData.marketing_none || false}
-                  onChange={handleInputChange}
+                  {...register("marketing_none")}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setValue("marketing_none", true);  
+                      setValue("marketing_facebook", false);
+                      setValue("marketing_adwords", false);
+                      setValue("marketing_seo", false);
+                      setValue("marketing_tv", false);
+                      setValue("marketing_radio", false);
+                      setValue("marketing_print", false);
+                      setValue("marketing_other", false);
+                      clearErrors();
+                      setValidationError("");
+                    }
+                  }}
                 />
                 <label
                   className="infusion-field-label-container infusion-label-checkbox"
@@ -317,6 +662,13 @@ const MarketingFunnel = () => {
                 </label>
               </div>
             </div>
+
+            {validationError && (
+              <div className="text-red-500 text-sm mt-4 text-center">
+                {validationError}
+              </div>
+            )}
+
             <div className="cta-direction">
               <button
                 type="button"
@@ -344,10 +696,11 @@ const MarketingFunnel = () => {
             </h3>
 
             <select
-              name="country"
-              value={formData.country || ""}
-              onChange={handleInputChange}
-              required
+              {...register("country")}
+              className={`w-full p-3 border rounded-lg transition-all duration-200 ${
+                errors.country ? 'border-red-500 shake' : 
+                dirtyFields.country ? 'border-green-500' : 'border-gray-300'
+              }`}
             >
               <option value="">Select your home base</option>
 
@@ -376,6 +729,19 @@ const MarketingFunnel = () => {
                 </option>
               ))}
             </select>
+
+            <AnimatePresence>
+              {errors.country && (
+                <motion.p
+                  className="text-red-500 text-sm mt-1"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  {errors.country.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
 
             <div className="cta-direction">
               <button
@@ -410,12 +776,9 @@ const MarketingFunnel = () => {
               <span className="infusion-option">
                 <input
                   id="inf_option_Howmuchisyourmonthlymarketingbudget_4332"
-                  name="monthly_budget"
+                  {...register("monthly_budget")}
                   type="radio"
                   value="Under $5k"
-                  checked={formData.monthly_budget === "Under $5k"}
-                  onChange={handleInputChange}
-                  required
                 />
                 <label htmlFor="inf_option_Howmuchisyourmonthlymarketingbudget_4332">
                   Under $5k
@@ -424,11 +787,9 @@ const MarketingFunnel = () => {
               <span className="infusion-option">
                 <input
                   id="inf_option_Howmuchisyourmonthlymarketingbudget_4336"
-                  name="monthly_budget"
+                  {...register("monthly_budget")}
                   type="radio"
                   value="$5k - $10k"
-                  checked={formData.monthly_budget === "$5k - $10k"}
-                  onChange={handleInputChange}
                 />
                 <label htmlFor="inf_option_Howmuchisyourmonthlymarketingbudget_4336">
                   $5k - $10k
@@ -437,11 +798,9 @@ const MarketingFunnel = () => {
               <span className="infusion-option">
                 <input
                   id="inf_option_Howmuchisyourmonthlymarketingbudget_4338"
-                  name="monthly_budget"
+                  {...register("monthly_budget")}
                   type="radio"
                   value="$10k - $20k"
-                  checked={formData.monthly_budget === "$10k - $20k"}
-                  onChange={handleInputChange}
                 />
                 <label htmlFor="inf_option_Howmuchisyourmonthlymarketingbudget_4338">
                   $10k - $20k
@@ -450,11 +809,9 @@ const MarketingFunnel = () => {
               <span className="infusion-option">
                 <input
                   id="inf_option_Howmuchisyourmonthlymarketingbudget_4340"
-                  name="monthly_budget"
+                  {...register("monthly_budget")}
                   type="radio"
                   value="$20k - $35k"
-                  checked={formData.monthly_budget === "$20k - $35k"}
-                  onChange={handleInputChange}
                 />
                 <label htmlFor="inf_option_Howmuchisyourmonthlymarketingbudget_4340">
                   $20k - $35k
@@ -463,11 +820,9 @@ const MarketingFunnel = () => {
               <span className="infusion-option">
                 <input
                   id="inf_option_Howmuchisyourmonthlymarketingbudget_4342"
-                  name="monthly_budget"
+                  {...register("monthly_budget")}
                   type="radio"
                   value="$35k - $50k"
-                  checked={formData.monthly_budget === "$35k - $50k"}
-                  onChange={handleInputChange}
                 />
                 <label htmlFor="inf_option_Howmuchisyourmonthlymarketingbudget_4342">
                   $35k - $50k
@@ -476,17 +831,21 @@ const MarketingFunnel = () => {
               <span className="infusion-option">
                 <input
                   id="inf_option_Howmuchisyourmonthlymarketingbudget_4344"
-                  name="monthly_budget"
+                  {...register("monthly_budget")}
                   type="radio"
                   value="$50k+"
-                  checked={formData.monthly_budget === "$50k+"}
-                  onChange={handleInputChange}
                 />
                 <label htmlFor="inf_option_Howmuchisyourmonthlymarketingbudget_4344">
                   $50k+
                 </label>
               </span>
             </div>
+
+            {errors.monthly_budget && (
+              <div className="text-red-500 text-base text-center mb-4">
+                {errors.monthly_budget.message}
+              </div>
+            )}
 
             <div className="cta-direction">
               <button
@@ -509,24 +868,20 @@ const MarketingFunnel = () => {
 
         {currentStep === 7 && (
           <div className="step">
-            <h3>{userName}, what is your website URL?</h3>
+            <h3>{watch("name")}, what is your website URL?</h3>
             <p className="light_text">
               If you don&apos;t have one, check the box below
             </p>
 
             {/* Conditionally render the input field if the checkbox is not checked */}
-            {!formData.noWebsite && (
+            {!watch("noWebsite") && (
               <div className="revenue-input-container">
                 <input
                   type="url"
                   id="websiteUrl"
-                  name="website_url"
+                  {...register("website_url")}
                   placeholder="https://example.com"
-                  value={formData.website_url}
-                  onChange={(e) =>
-                    setFormData({ ...formData, website_url: e.target.value })
-                  }
-                  required
+                  className={errors.website_url ? 'error' : ''}
                 />
               </div>
             )}
@@ -535,14 +890,26 @@ const MarketingFunnel = () => {
               <input
                 type="checkbox"
                 id="noWebsite"
-                name="no_website"
-                checked={formData.noWebsite}
-                onChange={(e) =>
-                  setFormData({ ...formData, noWebsite: e.target.checked })
-                }
+                {...register("noWebsite")}
+                onChange={(e) => {
+                  const isChecked = e.target.checked;
+                  setValue("noWebsite", isChecked);
+                  if (isChecked) {
+                    setValue("website_url", "No website");
+                    clearErrors("website_url");
+                  } else {
+                    setValue("website_url", "");
+                  }
+                }}
               />
               <label htmlFor="noWebsite">I don&apos;t have a website</label>
             </div>
+
+            {errors.website_url && !watch("noWebsite") && (
+              <div className="text-red-500 text-sm mt-2 text-center">
+                Please enter your website URL or check &apos;I don&apos;t have a website&apos;
+              </div>
+            )}
 
             <div className="cta-direction">
               <button
@@ -565,30 +932,36 @@ const MarketingFunnel = () => {
 
         {currentStep === 8 && (
           <div className="step">
-            <h3>Paint Us a Picture of Your Home Service Empire! 🏠🎨</h3>
+            <h2>Tell Us About Your Service Empire! 🏠 🎨</h2>
             <p className="light_text">
-              We&apos;re excited to learn about your unique business! Give us
-              the inside scoop:
-            </p>
-            <div className="text-center">
-              <ol className="light_text text-left inline-block">
-                <li>🧙‍♂️What magical home services do you offer?</li>
-                <li>🎯Who are your ideal customers?</li>
-                <li>💲What&apos;s your typical price range for services?</li>
-              </ol>
-            </div>
-            <p className="light_text">
-              Don&apos;t hold back - the more we know, the better we can help
-              you dominate your local market!
+              We&apos;re excited to learn about your unique business! Give us the inside scoop:
             </p>
 
-            <textarea
-              name="business_description"
-              rows="4"
-              value={formData.business_description || ""}
-              onChange={handleInputChange}
-              required
-            ></textarea>
+            <div className="business-description-prompts">
+              <p>🏠 What magical home services do you offer?</p>
+              <p>👥 Who are your ideal customers?</p>
+              <p>💲 What&apos;s your typical price range for services?</p>
+            </div>
+
+            <p className="light_text mt-4">
+              Don&apos;t hold back - the more we know, the better we can help you dominate your local market!
+            </p>
+
+            <div className="revenue-input-container">
+              <textarea
+                {...register("business_description")}
+                className={`w-full p-4 border rounded-lg min-h-[150px] ${
+                  errors.business_description ? 'border-red-500' : 'border-gray-300'
+                }`}
+                placeholder="Tell us about your business..."
+              />
+            </div>
+
+            {errors.business_description && (
+              <div className="text-red-500 text-sm mt-2 text-center">
+                {errors.business_description.message}
+              </div>
+            )}
 
             <div className="cta-direction">
               <button
@@ -625,46 +998,43 @@ const MarketingFunnel = () => {
               <input
                 type="text"
                 id="currentRevenue"
-                name="current_revenue"
-                value={`$${(formData.current_revenue !== undefined
-                  ? formData.current_revenue
-                  : 33000
-                ).toLocaleString()}`} // Ensure it&apos;s a valid number
+                {...register("current_revenue")}
+                value={`$${watch("current_revenue", 33000).toLocaleString()}`}
                 onChange={(e) => {
-                  const value = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric values
-                  setFormData({
-                    ...formData,
-                    current_revenue: parseInt(value) || 0,
-                  });
+                  const value = e.target.value.replace(/[^0-9]/g, "");
+                  setValue("current_revenue", parseInt(value) || 0);
                 }}
-                required
+                className="text-center text-[40px] font-light"
+                // placeholder="$"
               />
             </div>
 
-            <div className="slider-container">
+            <div className="slider-container mt-8">
               <input
                 type="range"
                 id="currentRevenueSlider"
-                name="current_revenue"
                 min="0"
                 max="1000000"
                 step="1000"
-                value={
-                  formData.current_revenue !== undefined
-                    ? formData.current_revenue
-                    : 33000
-                }
+                value={watch("current_revenue", 33000)}
                 onChange={(e) => {
                   const value = parseInt(e.target.value, 10);
-                  setFormData({ ...formData, current_revenue: value });
+                  setValue("current_revenue", value);
                 }}
+                className="w-full"
                 style={{
                   background: `linear-gradient(to right, #38bdf8 ${
-                    (formData.current_revenue / 1000000) * 100
-                  }%, #d3d3d3 ${(formData.current_revenue / 1000000) * 100}%)`,
+                    (watch("current_revenue", 33000) / 1000000) * 100
+                  }%, #d3d3d3 ${(watch("current_revenue", 33000) / 1000000) * 100}%)`,
                 }}
               />
             </div>
+
+            {validationError && (
+              <div className="text-red-500 text-sm mt-2 text-center">
+                {validationError}
+              </div>
+            )}
 
             <div className="cta-direction">
               <button
@@ -698,46 +1068,42 @@ const MarketingFunnel = () => {
               <input
                 type="text"
                 id="targetRevenue"
-                name="target_revenue"
-                value={`$${(formData.target_revenue !== undefined
-                  ? formData.target_revenue
-                  : 100000
-                ).toLocaleString()}`} // Default to $100,000
+                {...register("target_revenue")}
+                value={`$${watch("target_revenue", 100000).toLocaleString()}`}
                 onChange={(e) => {
-                  const value = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric values
-                  setFormData({
-                    ...formData,
-                    target_revenue: parseInt(value) || 0,
-                  });
+                  const value = e.target.value.replace(/[^0-9]/g, "");
+                  setValue("target_revenue", parseInt(value) || 0);
                 }}
-                required
+                className="text-center text-[40px] font-light"
               />
             </div>
 
-            <div className="slider-container">
+            <div className="slider-container mt-8">
               <input
                 type="range"
                 id="targetRevenueSlider"
-                name="target_revenue"
                 min="0"
                 max="2000000"
                 step="1000"
-                value={
-                  formData.target_revenue !== undefined
-                    ? formData.target_revenue
-                    : 100000
-                } // Default to $100,000
+                value={watch("target_revenue", 100000)}
                 onChange={(e) => {
                   const value = parseInt(e.target.value, 10);
-                  setFormData({ ...formData, target_revenue: value });
+                  setValue("target_revenue", value);
                 }}
+                className="w-full"
                 style={{
                   background: `linear-gradient(to right, #38bdf8 ${
-                    (formData.target_revenue / 2000000) * 100
-                  }%, #d3d3d3 ${(formData.target_revenue / 2000000) * 100}%)`,
+                    (watch("target_revenue", 100000) / 2000000) * 100
+                  }%, #d3d3d3 ${(watch("target_revenue", 100000) / 2000000) * 100}%)`,
                 }}
               />
             </div>
+
+            {validationError && (
+              <div className="text-red-500 text-sm mt-2 text-center">
+                {validationError}
+              </div>
+            )}
 
             <div className="cta-direction">
               <button
@@ -762,7 +1128,7 @@ const MarketingFunnel = () => {
           <div className="step">
             <h3>
               Time for Some Real Talk,{" "}
-              <span className="userNameDisplay">{userName}</span>! 🤔
+              <span className="userNameDisplay">{watch("name")}</span>! 🤔
               What&apos;s the #1 Roadblock Standing Between You and Your Revenue
               Dreams?
             </h3>
@@ -772,12 +1138,26 @@ const MarketingFunnel = () => {
             </p>
 
             <textarea
-              name="revenue_obstacle"
+              {...register("revenue_obstacle")}
               rows="4"
-              value={formData.revenue_obstacle || ""}
-              onChange={handleInputChange}
-              required
+              className={`w-full p-3 border rounded-lg transition-all duration-200 ${
+                errors.revenue_obstacle ? 'border-red-500 shake' : 
+                dirtyFields.revenue_obstacle ? 'border-green-500' : 'border-gray-300'
+              }`}
             ></textarea>
+
+            <AnimatePresence>
+              {errors.revenue_obstacle && (
+                <motion.p
+                  className="text-red-500 text-sm mt-1"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  {errors.revenue_obstacle.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
 
             <div className="cta-direction">
               <button
@@ -804,56 +1184,102 @@ const MarketingFunnel = () => {
               The Growth Clock is Ticking! ⏰ When Are You Ready to Launch?
             </h3>
             <p className="light_text">
-              <span className="userNameDisplay">{userName}</span>, your journey
+              <span className="userNameDisplay">{watch("name")}</span>, your journey
               to local market domination is about to begin. Let&apos;s pinpoint
               your take-off time!
             </p>
 
-            <div className="options-container list">
-              <span className="infusion-option">
+            <div className="options-container list" style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '1rem',
+              width: '100%',
+              maxWidth: '600px',
+              margin: '2rem auto'
+            }}>
+              <span className="infusion-option" style={{ 
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '1rem',
+                background: '#f8f9fa',
+                borderRadius: '8px',
+                cursor: 'pointer'
+              }}>
                 <input
                   id="start_immediately"
-                  name="start_time"
                   type="radio"
+                  {...register("start_time")}
                   value="Immediately"
-                  checked={formData.start_time === "Immediately"}
-                  onChange={handleInputChange}
-                  required
                 />
-                <label htmlFor="start_immediately">Immediately</label>
+                <label htmlFor="start_immediately" style={{ 
+                  marginLeft: '0.5rem',
+                  cursor: 'pointer',
+                  flex: 1
+                }}>Immediately</label>
               </span>
-              <span className="infusion-option">
+              <span className="infusion-option" style={{ 
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '1rem',
+                background: '#f8f9fa',
+                borderRadius: '8px',
+                cursor: 'pointer'
+              }}>
                 <input
                   id="within1month"
-                  name="start_time"
                   type="radio"
+                  {...register("start_time")}
                   value="Within 1 month"
-                  checked={formData.start_time === "Within 1 month"}
-                  onChange={handleInputChange}
                 />
-                <label htmlFor="within1month">Within 1 month</label>
+                <label htmlFor="within1month" style={{ 
+                  marginLeft: '0.5rem',
+                  cursor: 'pointer',
+                  flex: 1
+                }}>Within 1 month</label>
               </span>
-              <span className="infusion-option">
+              <span className="infusion-option" style={{ 
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '1rem',
+                background: '#f8f9fa',
+                borderRadius: '8px',
+                cursor: 'pointer'
+              }}>
                 <input
                   id="within3month"
-                  name="start_time"
                   type="radio"
+                  {...register("start_time")}
                   value="Within 3 months"
-                  checked={formData.start_time === "Within 3 months"}
-                  onChange={handleInputChange}
                 />
-                <label htmlFor="within3month">Within 3 months</label>
+                <label htmlFor="within3month" style={{ 
+                  marginLeft: '0.5rem',
+                  cursor: 'pointer',
+                  flex: 1
+                }}>Within 3 months</label>
               </span>
-              <span className="infusion-option">
+              <span className="infusion-option" style={{ 
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '1rem',
+                background: '#f8f9fa',
+                borderRadius: '8px',
+                cursor: 'pointer'
+              }}>
                 <input
                   id="not_sure"
-                  name="start_time"
                   type="radio"
+                  {...register("start_time")}
                   value="Not sure"
-                  checked={formData.start_time === "Not sure"}
-                  onChange={handleInputChange}
                 />
-                <label htmlFor="not_sure">Not sure</label>
+                <label htmlFor="not_sure" style={{ 
+                  marginLeft: '0.5rem',
+                  cursor: 'pointer',
+                  flex: 1
+                }}>Not sure</label>
               </span>
             </div>
 
@@ -889,12 +1315,9 @@ const MarketingFunnel = () => {
                 <span className="infusion-option" key={number + 1}>
                   <input
                     id={`interest_level_${number + 1}`}
-                    name="interest_level"
                     type="radio"
-                    value={number + 1}
-                    checked={formData.interest_level == number + 1}
-                    onChange={handleInputChange}
-                    required
+                    {...register("interest_level")}
+                    value={String(number + 1)}
                   />
                   <label htmlFor={`interest_level_${number + 1}`}>
                     <span>{number + 1}</span>
@@ -902,6 +1325,12 @@ const MarketingFunnel = () => {
                 </span>
               ))}
             </div>
+
+            {errors.interest_level && (
+              <div className="text-red-500 text-sm mt-2 text-center">
+                {errors.interest_level.message}
+              </div>
+            )}
 
             <div className="cta-direction">
               <button
@@ -925,7 +1354,7 @@ const MarketingFunnel = () => {
         {currentStep === 14 && (
           <div className="step">
             <p className="light_text">
-              Alright <span className="userNameDisplay">{userName}</span>,
+              Alright <span className="userNameDisplay">{watch("name")}</span>,
               you&apos;re at the finish line - one last thing! 🏁
             </p>
             <h3>
@@ -937,23 +1366,18 @@ const MarketingFunnel = () => {
               <span className="infusion-option">
                 <input
                   id="investment_willingness_yes"
-                  name="investment_willingness"
                   type="radio"
+                  {...register("investment_willingness")}
                   value="Yes"
-                  checked={formData.investment_willingness === "Yes"}
-                  onChange={handleInputChange}
-                  required
                 />
                 <label htmlFor="investment_willingness_yes">Yes</label>
               </span>
               <span className="infusion-option">
                 <input
                   id="investment_willingness_no"
-                  name="investment_willingness"
                   type="radio"
+                  {...register("investment_willingness")}
                   value="No"
-                  checked={formData.investment_willingness === "No"}
-                  onChange={handleInputChange}
                 />
                 <label htmlFor="investment_willingness_no">No</label>
               </span>
@@ -982,34 +1406,55 @@ const MarketingFunnel = () => {
           <div className="step">
             <h3>
               🎉 BREAKTHROUGH ALERT! 🎉 We&apos;ve Got the Secret Sauce for Your
-              Success, <span className="userNameDisplay">{userName}</span>!
+              Success, <span className="userNameDisplay">{watch("name")}</span>!
             </h3>
             <p className="light_text">
               Based on your responses, we&apos;re confident we can SUPERCHARGE
               your business growth with our proven funnels and marketing
-              strategies. 🚀💼
+              strategies. 🚀 💼
             </p>
 
-            <input
-              type="text"
-              name="final_name"
-              placeholder="Your Name"
-              value={formData.final_name || ""}
-              onChange={handleInputChange}
-              required
-              style={{ marginBottom: "15px" }}
-            />
+            <div className="form-group" style={{ marginBottom: "20px" }}>
+              <input
+                type="text"
+                {...register("final_name")}
+                placeholder="Your Name"
+                className={`w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 ${
+                  errors.final_name ? 'border-red-500 bg-red-50' : 
+                  watch("final_name") ? 'border-green-500 bg-green-50' : ''
+                }`}
+              />
+              {errors.final_name && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.final_name.message}
+                </p>
+              )}
+            </div>
 
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number"
-              value={formData.phone || ""}
-              onChange={handleInputChange}
-              required
-            />
+            <div className="form-group">
+              <input
+                type="email"
+                {...register("email")}
+                placeholder="Your Email"
+                className={`w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 ${
+                  errors.email ? 'border-red-500 bg-red-50' : 
+                  watch("email") ? 'border-green-500 bg-green-50' : ''
+                }`}
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
 
-            <div className="cta-direction">
+            {formState.error && (
+              <p className="text-red-500 text-sm mt-2 text-center">
+                {formState.error}
+              </p>
+            )}
+
+            <div className="cta-direction" style={{ marginTop: "25px" }}>
               <button
                 type="button"
                 className="prev-step"
@@ -1017,8 +1462,13 @@ const MarketingFunnel = () => {
               >
                 Previous
               </button>
-              <button type="submit" className="next-step" id="submit-form">
-                Book My Strategy Session
+              <button 
+                type="submit"
+                className={`next-step ${formState.isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                id="submit-form"
+                disabled={formState.isLoading}
+              >
+                {formState.isLoading ? 'Submitting...' : 'Submit Application'}
               </button>
             </div>
           </div>
