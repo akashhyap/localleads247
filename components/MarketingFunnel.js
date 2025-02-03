@@ -4,6 +4,35 @@ import { motion, AnimatePresence } from "framer-motion";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+const spinnerStyles = {
+  loader: {
+    width: '20px',
+    height: '20px',
+    border: '3px solid #ffffff40',
+    borderTop: '3px solid #fff',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
+    display: 'inline-block',
+    marginLeft: '8px',
+    verticalAlign: 'middle',
+  },
+  '@keyframes spin': {
+    '0%': { transform: 'rotate(0deg)' },
+    '100%': { transform: 'rotate(360deg)' },
+  },
+};
+
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 const totalSteps = 15;
 
 // Validation schema
@@ -932,15 +961,15 @@ Additional Information:
 
         {currentStep === 8 && (
           <div className="step">
-            <h2>Tell Us About Your Service Empire! </h2>
+            <h2>Tell Us About Your Service Empire! 🏠 🎨</h2>
             <p className="light_text">
               We&apos;re excited to learn about your unique business! Give us the inside scoop:
             </p>
 
             <div className="business-description-prompts">
-              <p> What magical home services do you offer?</p>
-              <p> Who are your ideal customers?</p>
-              <p> What&apos;s your typical price range for services?</p>
+              <p>🏠 What magical home services do you offer?</p>
+              <p>👥 Who are your ideal customers?</p>
+              <p>💲 What&apos;s your typical price range for services?</p>
             </div>
 
             <p className="light_text mt-4">
@@ -1404,13 +1433,13 @@ Additional Information:
         {currentStep === totalSteps && (
           <div className="step">
             <h3>
-              BREAKTHROUGH ALERT! We&apos;ve Got the Secret Sauce for Your
+              🎉 BREAKTHROUGH ALERT! 🎉 We&apos;ve Got the Secret Sauce for Your
               Success, <span className="userNameDisplay">{watch("name")}</span>!
             </h3>
             <p className="light_text">
               Based on your responses, we&apos;re confident we can SUPERCHARGE
               your business growth with our proven funnels and marketing
-              strategies.
+              strategies. 🚀 💼
             </p>
 
             <div className="form-group" style={{ marginBottom: "20px" }}>
@@ -1463,11 +1492,14 @@ Additional Information:
               </button>
               <button 
                 type="submit"
-                className={`next-step ${formState.isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
+                className={`next-step ${formState.isLoading ? 'opacity-90 cursor-not-allowed' : ''} inline-flex items-center justify-center`}
                 id="submit-form"
                 disabled={formState.isLoading}
               >
-                {formState.isLoading ? 'Submitting...' : 'Submit Application'}
+                <span>{formState.isLoading ? 'Submitting' : 'Submit Application'}</span>
+                {formState.isLoading && (
+                  <span style={spinnerStyles.loader}></span>
+                )}
               </button>
             </div>
           </div>
