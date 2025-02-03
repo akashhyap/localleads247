@@ -8,8 +8,8 @@ const Container = ({ blok }) => {
 
   return (
     <div
-      className={`relative fluid-layout md:w-6/12 mb-10 mt-5 lg:mt-2 m-auto ${
-        full_width ? "md:w-full" : ""
+      className={`relative fluid-layout lg:w-6/12 mb-10 mt-5 lg:mt-2 m-auto ${
+        full_width ? "lg:w-full" : ""
       } bg-[${blok?.bg_color?.color}]`}
       {...storyblokEditable(blok)}
       style={{paddingTop: blok?.padding_top, paddingBottom: blok?.padding_bottom}}

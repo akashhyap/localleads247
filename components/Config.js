@@ -157,7 +157,7 @@ const Config = ({ blok }) => {
         leaveTo="-translate-x-full"
         as={Fragment}
       >
-        <div className="side_menu font-sans font-medium fixed top-0 left-0 w-[95%] h-screen bg-white overflow-y-auto z-50 shadow-lg">
+        <div className="side_menu font-sans font-medium fixed top-0 left-0 w-[95%] md:w-6/12 h-screen bg-white overflow-y-auto z-50 shadow-lg">
           <div className="overflow-hidden">
             <div className="px-5 pt-4 flex items-center justify-between">
               <div>
@@ -201,7 +201,7 @@ const Config = ({ blok }) => {
                 </button>
               </div>
             </div>
-            <div className="px-4 pt-2 pb-3 mt-5 sm:px-3 flex flex-col">
+            <div className="px-5 pt-2 pb-3 mt-5 xl:px-3 flex flex-col">
               {blok?.header_menu?.map((nestedBlok) => {
                 return (
                   <CustomStoryblokComponent

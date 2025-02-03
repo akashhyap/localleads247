@@ -371,7 +371,7 @@ h6 {
 }
 
 /* Media query for larger screens */
-@media (min-width: 767px) {
+@media (min-width: 1300px) {
   .menulinks {
     padding: 7px 12px;
   }
