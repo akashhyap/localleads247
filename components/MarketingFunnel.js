@@ -40,7 +40,7 @@ const funnelSchema = z.object({
     return true;
   },
   {
-    message: "Please enter your website URL or check 'I don't have a website'",
+    message: "Please enter your website URL or check &apos;I don&apos;t have a website&apos;",
     path: ["website_url"],
   }
 ).refine(
@@ -182,9 +182,9 @@ const MarketingFunnel = () => {
       if (!hasWebsite && !hasNoWebsiteChecked) {
         setError('website_url', {
           type: 'manual',
-          message: "Please enter your website URL or check 'I don't have a website'"
+          message: "Please enter your website URL or check &apos;I don&apos;t have a website&apos;"
         });
-        setValidationError("Please enter your website URL or check 'I don't have a website'");
+        setValidationError("Please enter your website URL or check &apos;I don&apos;t have a website&apos;");
         return;
       }
       clearErrors('website_url');
@@ -357,7 +357,7 @@ Additional Information:
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          We've received your information and will be in touch soon.
+          We&apos;ve received your information and will be in touch soon.
         </motion.p>
         
         <motion.button 
@@ -457,11 +457,11 @@ Additional Information:
           <div className="step">
             <p className="light_text">
               Awesome, thanks{" "}
-              <span className="userNameDisplay">{watch("name")}</span>! 👍 Now,
+              <span className="userNameDisplay">{watch("name")}</span>! Now,
               let&apos;s see if we&apos;re the perfect match to skyrocket your
-              business. 🚀💼 We&apos;ve got a quick quiz to make sure we can
+              business. We&apos;ve got a quick quiz to make sure we can
               serve up that secret sauce for your success. Ready to dive in?
-              It&apos;ll be painless, we promise! 😉
+              It&apos;ll be painless, we promise!
             </p>
             <h3>What type of home-based service do you offer?</h3>
 
@@ -474,7 +474,7 @@ Additional Information:
               }`}
             >
               <option value="">
-                🏠 Choose the option that best describes your business:
+                Choose the option that best describes your business:
               </option>
               <option value="home_cleaning">Home Cleaning & Maintenance</option>
               <option value="lawn_care">Lawn Care & Landscaping</option>
@@ -522,7 +522,7 @@ Additional Information:
         {currentStep === 4 && (
           <div className="step">
             <h3>
-              Let&apos;s talk marketing magic! 🎩✨ What strategies are you
+              Let&apos;s talk marketing magic! What strategies are you
               currently using to attract local customers?
             </h3>
             <p className="light_text">Check all that apply</p>
@@ -691,7 +691,7 @@ Additional Information:
         {currentStep === 5 && (
           <div className="step">
             <h3>
-              Let&apos;s pin your business on the map! 🗺️ Where do you work your
+              Let&apos;s pin your business on the map! Where do you work your
               home service magic?
             </h3>
 
@@ -765,7 +765,7 @@ Additional Information:
         {currentStep === 6 && (
           <div className="step">
             <h3>
-              Let&apos;s talk treasure chests! 💰 What&apos;s your monthly
+              Let&apos;s talk treasure chests! What&apos;s your monthly
               budget for attracting those valuable local customers?
             </h3>
             <p className="light_text">
@@ -932,15 +932,15 @@ Additional Information:
 
         {currentStep === 8 && (
           <div className="step">
-            <h2>Tell Us About Your Service Empire! 🏠 🎨</h2>
+            <h2>Tell Us About Your Service Empire! </h2>
             <p className="light_text">
               We&apos;re excited to learn about your unique business! Give us the inside scoop:
             </p>
 
             <div className="business-description-prompts">
-              <p>🏠 What magical home services do you offer?</p>
-              <p>👥 Who are your ideal customers?</p>
-              <p>💲 What&apos;s your typical price range for services?</p>
+              <p> What magical home services do you offer?</p>
+              <p> Who are your ideal customers?</p>
+              <p> What&apos;s your typical price range for services?</p>
             </div>
 
             <p className="light_text mt-4">
@@ -985,7 +985,7 @@ Additional Information:
         {currentStep === 9 && (
           <div className="step">
             <h3>
-              Let&apos;s Celebrate Your Success! 🎉 What&apos;s Your Monthly
+              Let&apos;s Celebrate Your Success! What&apos;s Your Monthly
               Money Magic?
             </h3>
             <p className="light_text">
@@ -1057,11 +1057,11 @@ Additional Information:
 
         {currentStep === 10 && (
           <div className="step">
-            <h3>Dream Big! 🌠 What&apos;s Your Target Monthly Revenue?</h3>
+            <h3>Dream Big! What&apos;s Your Target Monthly Revenue?</h3>
             <p className="light_text">
               Let&apos;s set your sights on the stars! We&apos;re asking this so
               we can craft a stellar growth plan to rocket your business to your
-              dream destination. 🚀
+              dream destination.
             </p>
 
             <div className="revenue-input-container">
@@ -1127,14 +1127,13 @@ Additional Information:
         {currentStep === 11 && (
           <div className="step">
             <h3>
-              Time for Some Real Talk,{" "}
-              <span className="userNameDisplay">{watch("name")}</span>! 🤔
+              Time for Some Real Talk, <span className="userNameDisplay">{watch("name")}</span>! 
               What&apos;s the #1 Roadblock Standing Between You and Your Revenue
               Dreams?
             </h3>
             <p className="light_text">
               We all face challenges. Let&apos;s identify yours so we can knock
-              it down together! 💪
+              it down together!
             </p>
 
             <textarea
@@ -1181,7 +1180,7 @@ Additional Information:
         {currentStep === 12 && (
           <div className="step">
             <h3>
-              The Growth Clock is Ticking! ⏰ When Are You Ready to Launch?
+              The Growth Clock is Ticking! When Are You Ready to Launch?
             </h3>
             <p className="light_text">
               <span className="userNameDisplay">{watch("name")}</span>, your journey
@@ -1355,11 +1354,11 @@ Additional Information:
           <div className="step">
             <p className="light_text">
               Alright <span className="userNameDisplay">{watch("name")}</span>,
-              you&apos;re at the finish line - one last thing! 🏁
+              you&apos;re at the finish line - one last thing!
             </p>
             <h3>
               Are you willing to invest in your business growth to reach your
-              revenue goals? Ready to Seal the Deal? 🤝
+              revenue goals? Ready to Seal the Deal?
             </h3>
 
             <div className="options-container list">
@@ -1405,13 +1404,13 @@ Additional Information:
         {currentStep === totalSteps && (
           <div className="step">
             <h3>
-              🎉 BREAKTHROUGH ALERT! 🎉 We&apos;ve Got the Secret Sauce for Your
+              BREAKTHROUGH ALERT! We&apos;ve Got the Secret Sauce for Your
               Success, <span className="userNameDisplay">{watch("name")}</span>!
             </h3>
             <p className="light_text">
               Based on your responses, we&apos;re confident we can SUPERCHARGE
               your business growth with our proven funnels and marketing
-              strategies. 🚀 💼
+              strategies.
             </p>
 
             <div className="form-group" style={{ marginBottom: "20px" }}>
