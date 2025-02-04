@@ -13,6 +13,7 @@ export async function fetchSearchResults(query) {
 const { storyblokApi } = storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_API_TOKEN,
   use: [apiPlugin],
+  bridge: true
 });
 
 export async function getStory(slug) {

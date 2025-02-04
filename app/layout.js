@@ -14,6 +14,7 @@ const DynamicFooter = dynamic(() => import("@/components/Footer"), {
 storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_API_TOKEN,
   use: [apiPlugin],
+  bridge: true,
   cache: {
     clear: "auto",
     type: "memory",
