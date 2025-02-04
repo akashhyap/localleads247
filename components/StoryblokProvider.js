@@ -72,6 +72,7 @@ const StickyContent = dynamic(() => import('./StickyContent'), {
 storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_API_TOKEN,
   use: [apiPlugin],
+  bridge: true,
   components: {
     config: Config,
     page: Page,
