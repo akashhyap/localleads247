@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const Contact = ({ blok }) => {
   const [isClient, setIsClient] = useState(false);
@@ -21,30 +22,33 @@ const Contact = ({ blok }) => {
     setIsLoading(true);
     setIsError(false);
     try {
-      // Dynamically import the sendEmail function
       const { sendEmail } = await import("@/utils/send-email");
       const response = await sendEmail(data);
       if (response && response.message) {
-        setResponseMessage(response.message);
+        setResponseMessage("Thank you for your message! We'll get back to you soon.");
         setIsSent(true);
-        reset(); // Reset the form fields
+        reset();
         setTimeout(() => {
-          setIsSent(false); // Remove the success message after a delay
-          setResponseMessage(""); // Clear the response message
-        }, 5000); // 5 seconds delay
+          setIsSent(false);
+          setResponseMessage("");
+        }, 5000);
       } else {
-        setResponseMessage(
-          "Email sent, but no message returned from the server."
-        );
+        setResponseMessage("Email sent, but no message returned from the server.");
       }
     } catch (error) {
       setIsError(true);
-      setResponseMessage(
-        error.message || "An error occurred while sending the email."
-      );
+      setResponseMessage(error.message || "An error occurred while sending the email.");
     }
     setIsLoading(false);
   }
+
+  const handleRestart = () => {
+    setIsSent(false);
+    setIsLoading(false);
+    setIsError(false);
+    setResponseMessage("");
+    reset();
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -56,7 +60,54 @@ const Contact = ({ blok }) => {
   };
 
   if (!isClient || !blok) {
-    return null; // or a loading placeholder if preferred
+    return null;
+  }
+
+  if (isSent && !isError) {
+    return (
+      <div className="contact_us container max-w-3xl mx-auto">
+        <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-5 md:p-12 shadow-2xl rounded-lg">
+          <motion.div 
+            className="text-6xl text-green-500 mb-6"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
+            ✓
+          </motion.div>
+          
+          <motion.h3
+            className="text-2xl font-bold mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            Message Sent Successfully!
+          </motion.h3>
+          
+          <motion.p
+            className="text-gray-600 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            {responseMessage}
+          </motion.p>
+          
+          <motion.button 
+            onClick={handleRestart}
+            className="primary_btn primary_btn--small"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Send Another Message
+          </motion.button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -120,20 +171,32 @@ const Contact = ({ blok }) => {
                 rows={4}
                 placeholder="Type your message"
                 className="w-full resize-none rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-700 outline-none focus:border-black focus:shadow-md"
-                {...register("message", { required: true })}
+                {...register("message", { 
+                  required: "Message is required",
+                  minLength: { value: 10, message: "Message must be at least 10 characters" },
+                  maxLength: { value: 1000, message: "Message must not exceed 1000 characters" }
+                })}
               ></textarea>
+              <div>
+                {errors?.message && (
+                  <p className="text-poppy-900 text-sm mt-2">
+                    {errors.message.message}
+                  </p>
+                )}
+              </div>
             </div>
             <div>
               {isLoading ? (
-                <p>Loading...</p>
-              ) : isSent ? (
-                <p
-                  className={`text-green-500 ${
-                    isError ? "text-poppy-900" : ""
-                  }`}
-                >
-                  {responseMessage}
-                </p>
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                  <p className="ml-2">Sending your message...</p>
+                </div>
+              ) : isError ? (
+                <div className="p-4 rounded-md bg-red-50">
+                  <p className="text-sm text-red-600">
+                    {responseMessage}
+                  </p>
+                </div>
               ) : (
                 <button className="primary_btn primary_btn--small w-full">
                   Submit

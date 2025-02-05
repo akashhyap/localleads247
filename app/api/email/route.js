@@ -84,7 +84,7 @@ export async function POST(request) {
                       "
                     >
                       <img
-                        src="https://a.storyblok.com/f/305962/409x109/c31d51634e/local-leads-logo.svg"
+                        src="https://a.storyblok.com/f/305962/1000x300/61f35b451a/local-leads-247-logo.svg"
                         style="width:250px"
                       />
                     </p>
