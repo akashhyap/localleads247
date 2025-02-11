@@ -13,9 +13,13 @@ const Contact = ({ blok }) => {
     formState: { errors },
     reset,
   } = useForm();
+  
   const [isLoading, setIsLoading] = useState(false);
+ 
   const [isSent, setIsSent] = useState(false);
+ 
   const [responseMessage, setResponseMessage] = useState("");
+ 
   const [isError, setIsError] = useState(false);
 
   async function onSubmit(data) {
